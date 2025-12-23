@@ -19,7 +19,7 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-end justify-center overflow-hidden"
     >
       {/* Background Video with Overlay */}
       <div className="absolute inset-0">
@@ -53,7 +53,7 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 lg:px-8 relative z-10 pt-24">
+      <div className="container mx-auto px-4 lg:px-8 relative z-10 pt-34 pb-38">
         <div className="max-w-4xl mx-auto text-center">
           {/* Main Heading */}
           <h1
@@ -114,13 +114,13 @@ const Hero = () => {
             style={{ animationDelay: "0.4s" }}
           >
             {[
-              { value: "29+", label: t.stats.years },
+              { value: "31+", label: t.stats.years },
               { value: "500+", label: t.stats.clients },
-              { value: "150+", label: t.stats.agents },
+              { value: "50+", label: t.stats.agents },
               { value: "100%", label: t.stats.coverage },
             ].map((stat, statIndex) => (
               <div key={statIndex} className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-gradient mb-1">
+                <div className="text-2xl md:text-3xl font-bold text-gradient mb-1">
                   {stat.value}
                 </div>
                 <div className="text-sm text-muted-foreground">{stat.label}</div>
@@ -130,7 +130,7 @@ const Hero = () => {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+        <div className="absolute bottom-8 left-[48%] -translate-x-1/2 animate-bounce">
           <a
             href="#services"
             className="flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
