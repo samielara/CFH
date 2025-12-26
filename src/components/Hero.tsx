@@ -9,7 +9,7 @@ import heroVideo3 from "@/assets/videos/Fire_Extinguisher_Animation-3.mp4";
 const Hero = () => {
   const { t } = useLanguage();
 
-  const videos = useMemo(() => [heroVideo3, heroVideo], []);
+  const videos = useMemo(() => [heroVideo3, heroVideo2, heroVideo], []);
   const [index, setIndex] = useState(0);
 
   const handleEnded = () => {

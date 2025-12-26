@@ -5,6 +5,11 @@ import LanguageToggle from "./LanguageToggle";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { cn } from "@/lib/utils";
 import cfhLogo from "@/assets/CFH-Securite-Logo.png";
+import { Link } from "react-router-dom";
+
+type NavItem =
+  | { label: string; kind: "route"; to: string }
+  | { label: string; kind: "hash"; href: string };
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -18,24 +23,25 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // (Optional) close mobile menu on ESC
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setIsMobileMenuOpen(false);
     };
-
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
-  // NOTE: for now these can be anchors; later replace with routes (e.g. /services, /products)
-  const navItems = [
-    { label: t.nav.services, href: "#services" },
-    { label: "Products", href: "#products" }, // add to translations later
-    { label: t.nav.projects, href: "#projects" },
-    { label: t.nav.careers, href: "#careers" },
-    { label: t.nav.contact, href: "#contact" },
+  // Services -> real route
+  // Other nav items -> go to Home page + hash (works even when you’re on /services)
+  const navItems: NavItem[] = [
+    { label: t.nav.services, kind: "route", to: "/services" },
+    { label: "Products", kind: "hash", href: "/#products" },
+    { label: t.nav.projects, kind: "hash", href: "/#projects" },
+    { label: t.nav.about, kind: "hash", href: "/#about" },
+    { label: t.nav.contact, kind: "hash", href: "/#contact" },
   ];
+
+  const closeMobile = () => setIsMobileMenuOpen(false);
 
   return (
     <header
@@ -47,26 +53,37 @@ const Header = () => {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo = Home */}
-          <a href="#home" className="flex items-center group">
+          <Link to="/" className="flex items-center group" onClick={closeMobile}>
             <img
               src={cfhLogo}
               alt="CFH Sécurité - Prévention Incendie"
               className="h-14 md:h-16 w-auto transition-transform duration-300 group-hover:scale-105 drop-shadow-md"
             />
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-8">
-            {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="text-base font-semibold text-foreground transition-colors duration-300 relative group hover:text-[hsl(var(--cfh-red))] flex items-center gap-1"
-              >
-                {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-[3px] bg-[hsl(var(--cfh-blue))] transition-all duration-300 ease-out group-hover:w-full" />
-              </a>
-            ))}
+            {navItems.map((item) =>
+              item.kind === "route" ? (
+                <Link
+                  key={`route:${item.to}`}
+                  to={item.to}
+                  className="text-base font-semibold text-foreground transition-colors duration-300 relative group hover:text-[hsl(var(--cfh-red))] flex items-center gap-1"
+                >
+                  {item.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-[3px] bg-[hsl(var(--cfh-blue))] transition-all duration-300 ease-out group-hover:w-full" />
+                </Link>
+              ) : (
+                <a
+                  key={`hash:${item.href}`}
+                  href={item.href}
+                  className="text-base font-semibold text-foreground transition-colors duration-300 relative group hover:text-[hsl(var(--cfh-red))] flex items-center gap-1"
+                >
+                  {item.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-[3px] bg-[hsl(var(--cfh-blue))] transition-all duration-300 ease-out group-hover:w-full" />
+                </a>
+              )
+            )}
           </nav>
 
           {/* Right Side Actions */}
@@ -121,16 +138,27 @@ const Header = () => {
           )}
         >
           <nav className="flex flex-col gap-4 py-4 border-t border-border/30">
-            {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-foreground font-medium py-2 transition-colors hover:text-[hsl(var(--cfh-red))] flex items-center justify-between"
-              >
-                <span>{item.label}</span>
-              </a>
-            ))}
+            {navItems.map((item) =>
+              item.kind === "route" ? (
+                <Link
+                  key={`m:route:${item.to}`}
+                  to={item.to}
+                  onClick={closeMobile}
+                  className="text-foreground font-medium py-2 transition-colors hover:text-[hsl(var(--cfh-red))] flex items-center justify-between"
+                >
+                  <span>{item.label}</span>
+                </Link>
+              ) : (
+                <a
+                  key={`m:hash:${item.href}`}
+                  href={item.href}
+                  onClick={closeMobile}
+                  className="text-foreground font-medium py-2 transition-colors hover:text-[hsl(var(--cfh-red))] flex items-center justify-between"
+                >
+                  <span>{item.label}</span>
+                </a>
+              )
+            )}
 
             <a
               href="tel:5143333389"
