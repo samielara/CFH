@@ -6,6 +6,7 @@ interface Translations {
   nav: {
     home: string;
     services: string;
+    products: string;
     projects: string;
     about: string;
     contact: string;
@@ -69,6 +70,7 @@ const translations: Record<Language, Translations> = {
     nav: {
       home: 'Home',
       services: 'Services',
+      products: 'Products',
       projects: 'Projects',
       about: 'About',
       contact: 'Contact',
@@ -130,6 +132,7 @@ const translations: Record<Language, Translations> = {
     nav: {
       home: 'Accueil',
       services: 'Services',
+      products: 'Produits',
       projects: 'Projets',
       about: 'À Propos',
       contact: 'Contact',

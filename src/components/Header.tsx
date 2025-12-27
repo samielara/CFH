@@ -21,21 +21,28 @@ const Header = () => {
   const { t } = useLanguage();
   const location = useLocation();
 
-  const navItems: NavItem[] = useMemo(
-    () => [
-      { label: t.nav.services, to: "/services" },
-      { label: "Products", to: "/#products" },
-      { label: t.nav.projects, to: "/#projects" },
-      { label: t.nav.about, to: "/#about" },
-      { label: t.nav.contact, to: "/#contact" },
-    ],
-    [t]
-  );
+const navItems: NavItem[] = useMemo(
+  () => [
+    { label: t.nav.services, to: "/services" },
+    { label: t.nav.products, to: "/products" },
+    { label: t.nav.projects, to: "/projects" },
+    { label: t.nav.about, to: "/about" },
+    { label: t.nav.contact, to: "/contact" },
+  ],
+  [t]
+);
 
   const isItemActive = (item: NavItem) => {
-    if (item.to === "/services") {
+    if (item.to === "/services") 
       return location.pathname.startsWith("/services");
-    }
+    if (item.to === "/products") 
+      return location.pathname.startsWith("/products");
+    if (item.to === "/projects") 
+      return location.pathname.startsWith("/projects");
+    if (item.to === "/about") 
+      return location.pathname.startsWith("/about");
+    if (item.to === "/contact") 
+      return location.pathname.startsWith("/contact");
 
     // For "/#section" items, consider active only when you're on "/" and hash matches.
     if (item.to.startsWith("/#")) {
