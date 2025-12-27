@@ -1,147 +1,432 @@
-import { useMemo, useState } from "react";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { useEffect, useMemo, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import heroVideo from "@/assets/videos/Fire_Extinguisher_Animation.mp4";
-import heroVideo2 from "@/assets/videos/Fire_Extinguisher_Animation-2.mp4";
-import heroVideo3 from "@/assets/videos/Fire_Extinguisher_Animation-3.mp4";
+import { cn } from "@/lib/utils";
 
-const Hero = () => {
-  const { t } = useLanguage();
+import servicesLandingBg from "@/assets/services/CFH-Service-LandingPage.png";
 
-  const videos = useMemo(() => [heroVideo3, heroVideo2, heroVideo], []);
-  const [index, setIndex] = useState(0);
+// existing (you already have these)
+import designEngineeringImg from "@/assets/services/design-engineering.png";
+import inspectionMaintenanceImg from "@/assets/services/inspection-maintenance.png";
+import evacuationPlansImg from "@/assets/services/evacuation-plans.png";
 
-  const handleEnded = () => {
-    setIndex((prev) => (prev + 1) % videos.length);
-  };
+// ✅ add these 6 images (generate/place them in src/assets/services/)
+import airTightnessImg from "@/assets/services/air-tightness-test.png";
+import fireExtinguisherMaintenanceImg from "@/assets/services/fire-extinguisher-maintenance.png";
+import novec1230Img from "@/assets/services/novec-1230.png";
+import hydrostaticTestingImg from "@/assets/services/hydrostatic-testing.png";
+import fireHosesImg from "@/assets/services/fire-hoses.png";
+import respiratorsImg from "@/assets/services/respirators.png";
+import cylinderStrippingPaintingImg from "@/assets/services/cylinder-stripping-painting.png";
 
-  return (
-    <section
-      id="home"
-      className="relative min-h-screen flex items-end justify-center overflow-hidden"
-    >
-      {/* Background Video with Overlay */}
-      <div className="absolute inset-0">
-        <video
-          key={videos[index]} // reload when switching videos
-          className="w-full h-full object-cover"
-          src={videos[index]}
-          autoPlay
-          muted
-          playsInline
-          preload="auto"
-          onEnded={handleEnded}
-        />
-
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(180deg, hsl(222 47% 6% / 0.85) 0%, hsl(222 47% 6% / 0.7) 50%, hsl(222 47% 6% / 0.95) 100%)",
-          }}
-        />
-      </div>
-
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-float" />
-        <div
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/5 rounded-full blur-3xl animate-float"
-          style={{ animationDelay: "2s" }}
-        />
-      </div>
-
-      {/* Content */}
-      <div className="container mx-auto px-4 lg:px-8 relative z-10 pt-34 pb-38">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Main Heading */}
-          <h1
-            className="text-foreground font-display font-bold tracking-tight leading-[1.05] text-[clamp(2.5rem,5vw,5rem)]"
-            style={{ animationDelay: "0.1s" }}
-          >
-            {t.hero.title.split(" ").map((word, i) => (
-              <span
-                key={i}
-                className={
-                  word === "Fire" ||
-                  word === "Security" ||
-                  word === "Incendie" ||
-                  word === "Sécurité"
-                    ? "text-gradient"
-                    : ""
-                }
-              >
-                {word}{" "}
-              </span>
-            ))}
-          </h1>
-
-          {/* Subtitle */}
-          <p
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-up"
-            style={{ animationDelay: "0.2s" }}
-          >
-            {t.hero.subtitle}
-          </p>
-
-          {/* CTA Button */}
-          <div
-            className="flex items-center justify-center animate-fade-up"
-            style={{ animationDelay: "0.3s" }}
-          >
-            <Button
-              size="lg"
-              className="
-                group
-                bg-transparent text-[hsl(var(--cfh-red))]
-                border border-[hsl(var(--cfh-red))]
-                font-semibold px-10 py-6 text-lg
-                transition-colors
-                hover:bg-[hsl(var(--cfh-red))]
-                hover:text-primary-foreground
-                hover:border-transparent
-              "
-            >
-              {t.hero.cta}
-              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </Button>
-          </div>
-
-          {/* Stats Row */}
-          <div
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20 pt-10 border-t border-border/30 animate-fade-up"
-            style={{ animationDelay: "0.4s" }}
-          >
-            {[
-              { value: "31+", label: t.stats.years },
-              { value: "500+", label: t.stats.clients },
-              { value: "50+", label: t.stats.agents },
-              { value: "100%", label: t.stats.coverage },
-            ].map((stat, statIndex) => (
-              <div key={statIndex} className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-gradient mb-1">
-                  {stat.value}
-                </div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-[48%] -translate-x-1/2 animate-bounce">
-          <a
-            href="#services"
-            className="flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <span className="text-xs uppercase tracking-widest">Scroll</span>
-            <ChevronDown className="h-5 w-5" />
-          </a>
-        </div>
-      </div>
-    </section>
-  );
+type ServiceSection = {
+  id: string;
+  title: { en: string; fr: string };
+  subtitle: { en: string; fr: string };
+  image: string;
+  items: { en: string[]; fr: string[] };
 };
 
-export default Hero;
+export default function ServicesPage() {
+  const { language } = useLanguage();
+  const isFr = language === "fr";
+  const location = useLocation();
+
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const id = location.hash?.replace("#", "");
+    if (!id) return;
+
+    requestAnimationFrame(() => {
+      const el = document.getElementById(id);
+      const container = scrollRef.current;
+      if (!el || !container) return;
+
+      container.scrollTo({ top: el.offsetTop, behavior: "smooth" });
+    });
+  }, [location.hash]);
+
+  const sections = useMemo<ServiceSection[]>(
+    () => [
+      {
+        id: "design-engineering",
+        title: { en: "Design & Engineering", fr: "Conception & ingénierie" },
+        subtitle: {
+          en: "Engineer-certified design and planning for all types of fire protection systems.",
+          fr: "Conception et planification certifiées par ingénieur pour tous types de systèmes incendie.",
+        },
+        image: designEngineeringImg,
+        items: {
+          en: [
+            "Engineer-certified plan for all types of fire systems",
+            "Fire extinguishing system for kitchen: room-based restaurant with multiple systems",
+            "Clean agent fire suppression: computer rooms, archive rooms, telecommunications equipment",
+            "Carbon dioxide (CO₂) system: manufacturing environments",
+            "Powder chemical systems: paint booth, automotive, chemical storage",
+            "Fire extinguishing systems for small industrial machines: CNC lathe, server cabin, electrical substation, dust collector…",
+            "Sprinkler systems",
+            "System changes",
+            "Leak test",
+          ],
+          fr: [
+            "Plans certifiés par ingénieur pour tous types de systèmes incendie",
+            "Système d’extinction pour cuisine : restaurant en zones avec plusieurs systèmes",
+            "Extinction à agent propre : salles informatiques, archives, équipements télécom",
+            "Systèmes au CO₂ : environnements manufacturiers",
+            "Systèmes à poudre chimique : cabine de peinture, automobile, entreposage chimique",
+            "Extinction pour petites machines industrielles : tour CNC, cabine serveur, poste électrique, dépoussiéreur…",
+            "Systèmes de gicleurs",
+            "Modifications de systèmes",
+            "Test d’étanchéité (fuite)",
+          ],
+        },
+      },
+      {
+        id: "air-tightness-test",
+        title: { en: "Air Tightness Test", fr: "Test d’étanchéité à l’air" },
+        subtitle: {
+          en: "Airtightness verification for rooms protected by extinguishing systems.",
+          fr: "Vérification de l’étanchéité pour les pièces protégées par systèmes d’extinction.",
+        },
+        image: airTightnessImg,
+        items: {
+          en: [
+            "Air tightness test",
+            "CFH provides airtightness testing for rooms protected by NOVEC 1230, CO₂, etc.",
+          ],
+          fr: [
+            "Test d’étanchéité à l’air",
+            "CFH effectue des tests d’étanchéité pour les pièces protégées par NOVEC 1230, CO₂, etc.",
+          ],
+        },
+      },
+      {
+        id: "evacuation-plans",
+        title: { en: "Evacuation Plans", fr: "Plans d’évacuation" },
+        subtitle: {
+          en: "Clear, customized emergency evacuation planning for your facility.",
+          fr: "Plans d’évacuation d’urgence clairs et personnalisés pour votre établissement.",
+        },
+        image: evacuationPlansImg,
+        items: {
+          en: ["Customized Fire Emergency Evacuation Plans"],
+          fr: ["Plans d’évacuation d’urgence incendie personnalisés"],
+        },
+      },
+      {
+        id: "inspection-maintenance",
+        title: { en: "Inspection & Maintenance", fr: "Inspection & entretien" },
+        subtitle: {
+          en: "Regular inspections and maintenance to remain compliant with local fire codes.",
+          fr: "Inspections et entretien réguliers pour rester conforme aux codes incendie locaux.",
+        },
+        image: inspectionMaintenanceImg,
+        items: {
+          en: [
+            "Fire suppression systems for kitchens",
+            "Fire extinguishers",
+            "Fire alarm systems",
+            "Emergency lighting",
+            "Automatic sprinkler systems",
+            "DAr inspection (backflow prevention device)",
+            "Fire hydrants",
+            "Special hazard systems (Sapphire): CO₂, Novec, FM-200",
+            "Special hazard systems (FireTrace): CO₂, Novec, FM-200, chemical powder",
+            "Powder chemical systems: paint booth, automotive, chemical storage, etc.",
+            "Vehicle systems, marine",
+          ],
+          fr: [
+            "Systèmes d’extinction pour cuisines",
+            "Extincteurs",
+            "Systèmes d’alarme incendie",
+            "Éclairage d’urgence",
+            "Systèmes de gicleurs automatiques",
+            "Inspection DAr (dispositif anti-refoulement)",
+            "Bornes d’incendie",
+            "Systèmes à risques spéciaux (Sapphire) : CO₂, Novec, FM-200",
+            "Systèmes à risques spéciaux (FireTrace) : CO₂, Novec, FM-200, poudre chimique",
+            "Systèmes à poudre chimique : cabine de peinture, automobile, entreposage chimique, etc.",
+            "Systèmes véhicules et marins",
+          ],
+        },
+      },
+      {
+        id: "fire-extinguisher-maintenance",
+        title: { en: "Fire Extinguisher Maintenance", fr: "Entretien d’extincteurs" },
+        subtitle: {
+          en: "Inspection, repair, filling and maintenance in compliance with NFPA 10.",
+          fr: "Inspection, réparation, remplissage et entretien conformément à la norme NFPA 10.",
+        },
+        image: fireExtinguisherMaintenanceImg,
+        items: {
+          en: [
+            "Inspection, repair, filling and maintenance of portable, mobile or fixed powder extinguishers (NFPA 10).",
+          ],
+          fr: [
+            "Inspection, réparation, remplissage et entretien des extincteurs à poudre portatifs, mobiles ou fixes (NFPA 10).",
+          ],
+        },
+      },
+      {
+        id: "novec-1230",
+        title: { en: "Novec 1230", fr: "Novec 1230" },
+        subtitle: {
+          en: "Hydrostatic testing, filling and maintenance of Novec 1230 systems.",
+          fr: "Essais hydrostatiques, remplissage et entretien des systèmes Novec 1230.",
+        },
+        image: novec1230Img,
+        items: {
+          en: ["Hydrostatic testing, filling and maintenance of the Novec 1230 system."],
+          fr: ["Essais hydrostatiques, remplissage et entretien du système Novec 1230."],
+        },
+      },
+      {
+        id: "hydrostatic-testing",
+        title: { en: "Hydrostatic Testing", fr: "Essais hydrostatiques" },
+        subtitle: {
+          en: "High-pressure cylinder testing up to 10,000 PSI (Transport Canada approved).",
+          fr: "Tests de cylindres haute pression jusqu’à 10 000 PSI (approuvé Transport Canada).",
+        },
+        image: hydrostaticTestingImg,
+        items: {
+          en: [
+            "Hydrostatic tests on high-pressure cylinders using computer-controlled equipment (up to 10,000 PSI).",
+            "Approved: Transport Canada",
+          ],
+          fr: [
+            "Essais hydrostatiques sur cylindres haute pression avec équipement contrôlé par ordinateur (jusqu’à 10 000 PSI).",
+            "Approuvé : Transport Canada",
+          ],
+        },
+      },
+      {
+        id: "fire-hoses",
+        title: { en: "Fire Hoses", fr: "Boyaux d’incendie" },
+        subtitle: {
+          en: "Fire hose testing in accordance with NFPA 1962.",
+          fr: "Essais de boyaux conformément à la norme NFPA 1962.",
+        },
+        image: fireHosesImg,
+        items: {
+          en: ["Hose testing performed in accordance with NFPA 1962."],
+          fr: ["Essais de boyaux effectués conformément à la norme NFPA 1962."],
+        },
+      },
+      {
+        id: "respirators",
+        title: { en: "Respirators", fr: "Appareils respiratoires" },
+        subtitle: {
+          en: "Breathing air cylinder filling up to 4500 PSI with certified equipment.",
+          fr: "Remplissage de cylindres d’air respirable jusqu’à 4500 PSI avec équipement certifié.",
+        },
+        image: respiratorsImg,
+        items: {
+          en: [
+            "Breathing air cylinder filling for firefighters, divers, etc. up to 4500 PSI.",
+            "Equipment tested/certified by Canadian MAXXAM laboratory every six months.",
+          ],
+          fr: [
+            "Remplissage de cylindres d’air respirable (pompiers, plongeurs, etc.) jusqu’à 4500 PSI.",
+            "Équipement testé/certifié par le laboratoire canadien MAXXAM tous les six mois.",
+          ],
+        },
+      },
+      {
+        id: "cylinder-stripping-painting",
+        title: { en: "Cylinder Stripping & Painting", fr: "Décapage & peinture de cylindres" },
+        subtitle: {
+          en: "Stripping and painting performed with quality workmanship and environmental compliance.",
+          fr: "Décapage et peinture avec une qualité remarquable et conformité environnementale.",
+        },
+        image: cylinderStrippingPaintingImg,
+        items: {
+          en: ["Cylinder stripping and painting in compliance with Environment Canada requirements."],
+          fr: ["Décapage et peinture de cylindres conformément aux exigences d’Environnement Canada."],
+        },
+      },
+    ],
+    []
+  );
+
+  const pageTitle = isFr ? "Nos Services" : "Our Services";
+  const pageSubtitle = isFr
+    ? "Faites défiler pour découvrir nos services."
+    : "Scroll to explore our services.";
+
+  return (
+    <main className="min-h-screen">
+      {/* IMPORTANT: keep this for Header scroll tracking */}
+      <div
+        ref={scrollRef}
+        data-scroll-container="true"
+        className={cn(
+          "h-screen overflow-y-auto snap-y snap-mandatory",
+          // dark base so you never see white
+          "bg-[hsl(222_47%_6%)] text-foreground"
+        )}
+      >
+        {/* Global glow (consistent with landing page) */}
+        <div className="pointer-events-none fixed inset-0 -z-10 opacity-40">
+          <div className="absolute -top-40 -left-40 h-[520px] w-[520px] rounded-full blur-3xl bg-[hsl(var(--cfh-blue))]/25" />
+          <div className="absolute -bottom-40 -right-40 h-[520px] w-[520px] rounded-full blur-3xl bg-[hsl(var(--cfh-red))]/25" />
+        </div>
+
+        {/* Hero */}
+        <section className="snap-start min-h-screen relative overflow-hidden">
+          <div className="absolute inset-0">
+            <img
+              src={servicesLandingBg}
+              alt={pageTitle}
+              className="w-full h-full object-cover"
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(180deg, hsl(222 47% 6% / 0.70) 0%, hsl(222 47% 6% / 0.78) 45%, hsl(222 47% 6% / 0.92) 100%)",
+              }}
+            />
+          </div>
+
+          <div className="container mx-auto px-4 lg:px-8 relative z-10 pt-56">
+            <div className="mx-auto max-w-5xl text-center">
+              <h1 className="font-display font-bold tracking-tight leading-[1.05] text-[clamp(2.3rem,4.6vw,4.25rem)]">
+                {pageTitle}
+              </h1>
+              <p className="mt-5 text-lg md:text-xl text-muted-foreground leading-relaxed">
+                {pageSubtitle}
+              </p>
+
+              {/* Landing chips */}
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+                {sections.map((s) => (
+                  <a
+                    key={s.id}
+                    href={`#${s.id}`}
+                    className={cn(
+                      "inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-semibold",
+                      "bg-transparent text-[hsl(var(--cfh-blue))] border border-[hsl(var(--cfh-blue))]",
+                      "hover:bg-[hsl(var(--cfh-blue))] hover:text-white hover:border-transparent",
+                      "transition-colors duration-200"
+                    )}
+                  >
+                    {isFr ? s.title.fr : s.title.en}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 10 Sections (modern split layout, alternating) */}
+        {sections.map((s, idx) => {
+          const title = isFr ? s.title.fr : s.title.en;
+          const subtitle = isFr ? s.subtitle.fr : s.subtitle.en;
+          const items = isFr ? s.items.fr : s.items.en;
+
+          const isReversed = idx % 2 === 1;
+
+          return (
+            <section
+              key={s.id}
+              id={s.id}
+              className={cn(
+                "snap-start min-h-screen relative overflow-hidden scroll-mt-28",
+                "py-24"
+              )}
+            >
+              {/* dark section backdrop */}
+              <div className="absolute inset-0">
+                <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_15%_15%,hsl(var(--cfh-blue))_0%,transparent_60%),radial-gradient(80%_65%_at_85%_25%,hsl(var(--cfh-red))_0%,transparent_62%)] opacity-15" />
+                <div className="absolute inset-0 bg-[hsl(222_47%_6%)]/90" />
+              </div>
+
+              <div className="container mx-auto px-4 lg:px-8 relative z-10 pt-20">
+                <div
+                  className={cn(
+                    "mx-auto max-w-6xl",
+                    "grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-stretch",
+                    isReversed && "lg:[&>*:first-child]:order-2 lg:[&>*:last-child]:order-1"
+                  )}
+                >
+                  {/* IMAGE */}
+                  <div className="h-full">
+                    <div className="h-full min-h-[340px] md:min-h-[420px] rounded-3xl overflow-hidden border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.45)] bg-black/20">
+                      <img
+                        src={s.image}
+                        alt={title}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 pointer-events-none" />
+                    </div>
+                  </div>
+
+                  {/* CONTENT */}
+                  <div className="h-full flex">
+                    <div
+                      className={cn(
+                        "w-full rounded-3xl border border-white/10",
+                        "bg-white/5 backdrop-blur-xl",
+                        "shadow-[0_30px_80px_rgba(0,0,0,0.35)]",
+                        "p-8 md:p-10 flex flex-col"
+                      )}
+                    >
+                      {/* Centered title/subtitle */}
+                      <div className="text-center">
+                        <h2 className="font-display font-bold tracking-tight leading-[1.05] text-[clamp(2rem,3.2vw,3rem)]">
+                          {title}
+                        </h2>
+                        <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
+                          {subtitle}
+                        </p>
+                      </div>
+
+                      {/* Bullet list aligned cleanly */}
+                      <div className="mt-8 rounded-2xl bg-black/25 border border-white/10 p-6 md:p-7">
+                        <ul className="space-y-3 max-w-2xl mx-auto">
+                          {items.map((item, i) => (
+                            <li
+                              key={i}
+                              className="grid grid-cols-[14px_1fr] gap-x-3 items-start"
+                            >
+                              <span className="mt-2 h-2 w-2 rounded-full bg-[hsl(var(--cfh-red))]" />
+                              <span className="text-sm md:text-[15px] text-foreground/85 leading-relaxed">
+                                {item}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+
+                        <div className="mt-8 flex justify-center">
+                          <Button
+                            asChild
+                            className={cn(
+                              "group bg-transparent text-[hsl(var(--cfh-red))] border border-[hsl(var(--cfh-red))]",
+                              "font-semibold px-10 py-6 text-lg transition-colors",
+                              "hover:bg-[hsl(var(--cfh-red))] hover:text-primary-foreground hover:border-transparent"
+                            )}
+                          >
+                            <Link to="/#contact" className="inline-flex items-center gap-2">
+                              {isFr ? "Obtenir une soumission" : "Get a Quote"}
+                              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                            </Link>
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* spacer to keep consistent height feel */}
+                      <div className="flex-1" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          );
+        })}
+      </div>
+    </main>
+  );
+}

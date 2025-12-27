@@ -1,27 +1,72 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, Phone, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import LanguageToggle from "./LanguageToggle";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { cn } from "@/lib/utils";
 import cfhLogo from "@/assets/CFH-Securite-Logo.png";
-import { Link } from "react-router-dom";
 
-type NavItem =
-  | { label: string; kind: "route"; to: string }
-  | { label: string; kind: "hash"; href: string };
+type NavItem = {
+  label: string;
+  to: string;
+};
+
+const SCROLL_TRIGGER_PX = 20;
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const { t } = useLanguage();
+  const location = useLocation();
+
+  const navItems: NavItem[] = useMemo(
+    () => [
+      { label: t.nav.services, to: "/services" },
+      { label: "Products", to: "/#products" },
+      { label: t.nav.projects, to: "/#projects" },
+      { label: t.nav.about, to: "/#about" },
+      { label: t.nav.contact, to: "/#contact" },
+    ],
+    [t]
+  );
+
+  const isItemActive = (item: NavItem) => {
+    if (item.to === "/services") {
+      return location.pathname.startsWith("/services");
+    }
+
+    // For "/#section" items, consider active only when you're on "/" and hash matches.
+    if (item.to.startsWith("/#")) {
+      const itemHash = item.to.substring(1); // "#products"
+      return location.pathname === "/" && location.hash === itemHash;
+    }
+
+    return location.pathname === item.to;
+  };
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    // If a page uses an internal scroll container, mark it with: data-scroll-container="true"
+    const container = document.querySelector<HTMLElement>('[data-scroll-container="true"]');
+
+    const readScrollTop = () => (container ? container.scrollTop : window.scrollY);
+
+    const handleScroll = () => {
+      setIsScrolled(readScrollTop() > SCROLL_TRIGGER_PX);
+    };
+
+    // initialize state
+    handleScroll();
+
+    if (container) {
+      container.addEventListener("scroll", handleScroll, { passive: true });
+      return () => container.removeEventListener("scroll", handleScroll as any);
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll as any);
+  }, [location.pathname]);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -31,17 +76,7 @@ const Header = () => {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
-  // Services -> real route
-  // Other nav items -> go to Home page + hash (works even when you’re on /services)
-  const navItems: NavItem[] = [
-    { label: t.nav.services, kind: "route", to: "/services" },
-    { label: "Products", kind: "hash", href: "/#products" },
-    { label: t.nav.projects, kind: "hash", href: "/#projects" },
-    { label: t.nav.about, kind: "hash", href: "/#about" },
-    { label: t.nav.contact, kind: "hash", href: "/#contact" },
-  ];
-
-  const closeMobile = () => setIsMobileMenuOpen(false);
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   return (
     <header
@@ -53,7 +88,7 @@ const Header = () => {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo = Home */}
-          <Link to="/" className="flex items-center group" onClick={closeMobile}>
+          <Link to="/" className="flex items-center group" onClick={closeMobileMenu}>
             <img
               src={cfhLogo}
               alt="CFH Sécurité - Prévention Incendie"
@@ -63,27 +98,29 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-8">
-            {navItems.map((item) =>
-              item.kind === "route" ? (
+            {navItems.map((item) => {
+              const active = isItemActive(item);
+
+              return (
                 <Link
-                  key={`route:${item.to}`}
+                  key={item.to}
                   to={item.to}
-                  className="text-base font-semibold text-foreground transition-colors duration-300 relative group hover:text-[hsl(var(--cfh-red))] flex items-center gap-1"
+                  aria-current={active ? "page" : undefined}
+                  className={cn(
+                    "text-base font-semibold transition-colors duration-300 relative group flex items-center gap-1",
+                    active ? "text-[hsl(var(--cfh-red))]" : "text-foreground hover:text-[hsl(var(--cfh-red))]"
+                  )}
                 >
                   {item.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-[3px] bg-[hsl(var(--cfh-blue))] transition-all duration-300 ease-out group-hover:w-full" />
+                  <span
+                    className={cn(
+                      "absolute -bottom-1 left-0 h-[3px] bg-[hsl(var(--cfh-blue))] transition-all duration-300 ease-out",
+                      active ? "w-full" : "w-0 group-hover:w-full"
+                    )}
+                  />
                 </Link>
-              ) : (
-                <a
-                  key={`hash:${item.href}`}
-                  href={item.href}
-                  className="text-base font-semibold text-foreground transition-colors duration-300 relative group hover:text-[hsl(var(--cfh-red))] flex items-center gap-1"
-                >
-                  {item.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-[3px] bg-[hsl(var(--cfh-blue))] transition-all duration-300 ease-out group-hover:w-full" />
-                </a>
-              )
-            )}
+              );
+            })}
           </nav>
 
           {/* Right Side Actions */}
@@ -121,11 +158,7 @@ const Header = () => {
               className="p-2 text-foreground"
               aria-label="Toggle menu"
             >
-              {isMobileMenuOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
@@ -138,27 +171,24 @@ const Header = () => {
           )}
         >
           <nav className="flex flex-col gap-4 py-4 border-t border-border/30">
-            {navItems.map((item) =>
-              item.kind === "route" ? (
+            {navItems.map((item) => {
+              const active = isItemActive(item);
+
+              return (
                 <Link
-                  key={`m:route:${item.to}`}
+                  key={item.to}
                   to={item.to}
-                  onClick={closeMobile}
-                  className="text-foreground font-medium py-2 transition-colors hover:text-[hsl(var(--cfh-red))] flex items-center justify-between"
+                  onClick={closeMobileMenu}
+                  aria-current={active ? "page" : undefined}
+                  className={cn(
+                    "font-medium py-2 transition-colors flex items-center justify-between",
+                    active ? "text-[hsl(var(--cfh-red))]" : "text-foreground hover:text-[hsl(var(--cfh-red))]"
+                  )}
                 >
                   <span>{item.label}</span>
                 </Link>
-              ) : (
-                <a
-                  key={`m:hash:${item.href}`}
-                  href={item.href}
-                  onClick={closeMobile}
-                  className="text-foreground font-medium py-2 transition-colors hover:text-[hsl(var(--cfh-red))] flex items-center justify-between"
-                >
-                  <span>{item.label}</span>
-                </a>
-              )
-            )}
+              );
+            })}
 
             <a
               href="tel:5143333389"
