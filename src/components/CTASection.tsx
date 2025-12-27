@@ -1,5 +1,6 @@
 import { ArrowRight, Phone, Mail, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from "react-router-dom";
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const CTASection = () => {
@@ -35,8 +36,10 @@ const CTASection = () => {
                   size="lg"
                   className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-6 text-lg glow-primary group"
                 >
+                  <Link to="/quote">
                   {t.cta.button}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  </Link>
                 </Button>
                 <Button
                   variant="outline"

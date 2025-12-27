@@ -384,10 +384,10 @@ export default function ServicesPage() {
                               "hover:bg-[hsl(var(--cfh-red))] hover:text-primary-foreground hover:border-transparent"
                             )}
                           >
-                            <Link to="/#contact" className="inline-flex items-center gap-2">
-                              {isFr ? "Obtenir une soumission" : "Get a Quote"}
-                              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                            </Link>
+                          <Link to="/quote" className="inline-flex items-center gap-2">
+                            {isFr ? "Obtenir une soumission" : "Get a Quote"}
+                            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                          </Link>
                           </Button>
                         </div>
                       </div>

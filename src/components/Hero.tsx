@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Link } from "react-router-dom";
 import heroVideo from "@/assets/videos/Fire_Extinguisher_Animation.mp4";
 import heroVideo2 from "@/assets/videos/Fire_Extinguisher_Animation-2.mp4";
 import heroVideo3 from "@/assets/videos/Fire_Extinguisher_Animation-3.mp4";
@@ -103,8 +104,10 @@ const Hero = () => {
                 hover:border-transparent
               "
             >
+              <Link to="/quote">
               {t.hero.cta}
               <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </Link>
             </Button>
           </div>
 

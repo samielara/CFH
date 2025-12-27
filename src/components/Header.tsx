@@ -141,6 +141,7 @@ const navItems: NavItem[] = useMemo(
             </a>
 
             <Button
+              asChild
               className="
                 bg-transparent text-[hsl(var(--cfh-red))]
                 border border-[hsl(var(--cfh-red))]
@@ -151,7 +152,7 @@ const navItems: NavItem[] = useMemo(
                 hover:border-transparent
               "
             >
-              {t.hero.cta}
+              <Link to="/quote" onClick={closeMobileMenu}>{t.hero.cta}</Link>
             </Button>
 
             <LanguageToggle />

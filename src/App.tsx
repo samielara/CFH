@@ -8,6 +8,7 @@ import ProjectsPage from "./pages/ProjectsPage";
 import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
 import RestoreBodyScroll from "@/components/RestoreBodyScroll";
+import QuotePage from "./pages/QuotePage";
 
 const Layout = () => (
   <div className="min-h-screen">
@@ -26,6 +27,8 @@ const App = () => (
       <Route path="/projects" element={<ProjectsPage />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/contact" element={<ContactPage />} />
+      <Route path="/quote" element={<QuotePage />} />
+      <Route path="/demande-de-soumission" element={<QuotePage />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   </Routes>
