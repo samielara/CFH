@@ -7,11 +7,13 @@ import AboutPage from "./pages/AboutPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
+import ScrollToTop from "@/components/ScrollToTop";
 import RestoreBodyScroll from "@/components/RestoreBodyScroll";
 import QuotePage from "./pages/QuotePage";
 
 const Layout = () => (
   <div className="min-h-screen">
+    <ScrollToTop />
     <RestoreBodyScroll />
     <Header />
     <Outlet />

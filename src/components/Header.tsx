@@ -23,6 +23,7 @@ const Header = () => {
 
 const navItems: NavItem[] = useMemo(
   () => [
+    { label: t.nav.home, to: "/#home" },
     { label: t.nav.services, to: "/services" },
     { label: t.nav.products, to: "/products" },
     { label: t.nav.projects, to: "/projects" },
@@ -95,7 +96,7 @@ const navItems: NavItem[] = useMemo(
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo = Home */}
-          <Link to="/" className="flex items-center group" onClick={closeMobileMenu}>
+          <Link to="/#home" className="flex items-center group" onClick={() => {closeMobileMenu(); window.scrollTo({ top: 0, left: 0, behavior: "auto" }); }} >
             <img
               src={cfhLogo}
               alt="CFH Sécurité - Prévention Incendie"
