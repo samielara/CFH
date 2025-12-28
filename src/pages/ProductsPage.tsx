@@ -35,6 +35,15 @@ export default function ProductsPage() {
   const isFr = language === "fr";
   const [activeTab, setActiveTab] = useState<"all" | "fire" | "alarm" | "accessories">("all");
 
+  const tabTriggerClassName = cn(
+    "inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-semibold",
+    "bg-transparent text-[hsl(var(--cfh-blue))] border border-[hsl(var(--cfh-blue))]",
+    "hover:bg-[hsl(var(--cfh-blue))] hover:text-white hover:border-transparent",
+    "hover:shadow-[0_10px_30px_rgba(0,0,0,0.25)] active:brightness-95",
+    "transition-all duration-200",
+    "data-[state=active]:bg-[hsl(var(--cfh-blue))] data-[state=active]:text-white data-[state=active]:border-transparent"
+  );
+
   const categories = useMemo<ProductCategory[]>(
     () => [
       {
@@ -162,61 +171,60 @@ export default function ProductsPage() {
       </div>
 
       <main>
-        {/* HERO (match ServicesPage hero pattern) */}
-        <section className="relative min-h-[70vh] overflow-hidden">
-          <div className="absolute inset-0">
-            <img src={productsHeroImg} alt={pageTitle} className="w-full h-full object-cover" />
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(180deg, hsl(222 47% 6% / 0.70) 0%, hsl(222 47% 6% / 0.78) 45%, hsl(222 47% 6% / 0.92) 100%)",
-              }}
-            />
-          </div>
+        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)}>
+          {/* HERO (match ServicesPage hero height + filter UI) */}
+          <section className="relative min-h-[85vh] overflow-hidden pb-10 md:pb-14">
+            <div className="absolute inset-0">
+              <img src={productsHeroImg} alt={pageTitle} className="w-full h-full object-cover" />
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(180deg, hsl(222 47% 6% / 0.70) 0%, hsl(222 47% 6% / 0.78) 45%, hsl(222 47% 6% / 0.92) 100%)",
+                }}
+              />
+            </div>
 
-          <div className="container mx-auto px-4 lg:px-8 relative z-10 pt-44 md:pt-52">
-            <div className="mx-auto max-w-5xl text-center">
-              <h1 className="font-display font-bold tracking-tight leading-[1.05] text-[clamp(2.3rem,4.6vw,4.25rem)]">
-                {pageTitle}
-              </h1>
-              <p className="mt-5 text-lg md:text-xl text-muted-foreground leading-relaxed">
-                {pageSubtitle}
-              </p>
+            <div className="container mx-auto px-4 lg:px-8 relative z-10 pt-44 md:pt-52">
+              <div className="mx-auto max-w-5xl text-center">
+                <h1 className="font-display font-bold tracking-tight leading-[1.05] text-[clamp(2.3rem,4.6vw,4.25rem)]">
+                  {pageTitle}
+                </h1>
+                <p className="mt-5 text-lg md:text-xl text-muted-foreground leading-relaxed">{pageSubtitle}</p>
 
-              <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-                <Badge variant="secondary" className="px-4 py-2 text-sm bg-white/5 border border-white/10">
-                  <span className="inline-flex items-center gap-2">
-                    <Filter className="h-4 w-4 text-[hsl(var(--cfh-blue))]" />
-                    {isFr ? "Filtrer par catégorie" : "Filter by category"}
-                  </span>
-                </Badge>
+                {/* Filter badge + tabs directly under it (same as ServicesPage) */}
+                <div className="mt-10 flex flex-col items-center justify-center gap-4">
+                  <Badge variant="secondary" className="px-4 py-2 text-sm bg-white/5 border border-white/10">
+                    <span className="inline-flex items-center gap-2">
+                      <Filter className="h-4 w-4 text-[hsl(var(--cfh-blue))]" />
+                      {isFr ? "Filtrer par catégorie" : "Filter by category"}
+                    </span>
+                  </Badge>
+
+                  <TabsList className="mx-auto flex w-fit flex-wrap items-center justify-center gap-3 bg-transparent border-0 p-0">
+                    <TabsTrigger value="all" className={tabTriggerClassName}>
+                      {isFr ? "Tout" : "All"}
+                    </TabsTrigger>
+                    <TabsTrigger value="fire" className={tabTriggerClassName}>
+                      {isFr ? "Protection incendie" : "Fire Protection"}
+                    </TabsTrigger>
+                    <TabsTrigger value="alarm" className={tabTriggerClassName}>
+                      {isFr ? "Système d’alarme" : "Alarm"}
+                    </TabsTrigger>
+                    <TabsTrigger value="accessories" className={tabTriggerClassName}>
+                      {isFr ? "Accessoires" : "Accessories"}
+                    </TabsTrigger>
+                  </TabsList>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* CONTENT */}
-        <section className="py-16 md:py-24">
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="mx-auto max-w-6xl">
-              <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)}>
-                <TabsList className="mx-auto grid w-full max-w-[680px] grid-cols-2 md:grid-cols-4 bg-white/5 border border-white/10 rounded-full p-1">
-                  <TabsTrigger value="all" className="rounded-full">
-                    {isFr ? "Tout" : "All"}
-                  </TabsTrigger>
-                  <TabsTrigger value="fire" className="rounded-full">
-                    {isFr ? "Protection incendie" : "Fire Protection"}
-                  </TabsTrigger>
-                  <TabsTrigger value="alarm" className="rounded-full">
-                    {isFr ? "Système d’alarme" : "Alarm"}
-                  </TabsTrigger>
-                  <TabsTrigger value="accessories" className="rounded-full">
-                    {isFr ? "Accessoires" : "Accessories"}
-                  </TabsTrigger>
-                </TabsList>
-
-                <TabsContent value={activeTab} className="mt-10">
+          {/* CONTENT */}
+          <section className="pt-10 pb-16 md:pt-12 md:pb-24">
+            <div className="container mx-auto px-4 lg:px-8">
+              <div className="mx-auto max-w-6xl">
+                <TabsContent value={activeTab} className="mt-0">
                   <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                     {filtered.map((c) => {
                       const title = isFr ? c.title.fr : c.title.en;
@@ -243,13 +251,16 @@ export default function ProductsPage() {
                                   "linear-gradient(180deg, hsl(222 47% 6% / 0.15) 0%, hsl(222 47% 6% / 0.85) 100%)",
                               }}
                             />
-                            <div className="absolute left-5 top-5 flex flex-wrap gap-2">
-                              {badges.map((b) => (
-                                <Badge key={b} className="bg-black/35 border border-white/10 text-foreground">
-                                  {b}
-                                </Badge>
-                              ))}
-                            </div>
+
+                            {badges.length > 0 && (
+                              <div className="absolute left-5 top-5 flex flex-wrap gap-2">
+                                {badges.map((b) => (
+                                  <Badge key={b} className="bg-black/35 border border-white/10 text-foreground">
+                                    {b}
+                                  </Badge>
+                                ))}
+                              </div>
+                            )}
                           </div>
 
                           <CardContent className="p-7">
@@ -319,10 +330,10 @@ export default function ProductsPage() {
                     </div>
                   </div>
                 </TabsContent>
-              </Tabs>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </Tabs>
       </main>
 
       <Footer />

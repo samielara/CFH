@@ -15,7 +15,7 @@ import { toast } from "@/components/ui/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { cn } from "@/lib/utils";
 
-import heroImg from "@/assets/services/fire-extinguisher-maintenance.png";
+import heroImg from "@/assets/CFH-Quote.png";
 
 type QuoteBuildingType = "Commercial" | "Industriel" | "Institutionel";
 type QuoteOwner = "Oui" | "Non";

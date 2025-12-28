@@ -1,6 +1,16 @@
 import { useMemo, type ElementType } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Award, BadgeCheck, HeartHandshake, Lightbulb, Users } from "lucide-react";
+import {
+  ArrowRight,
+  Award,
+  BadgeCheck,
+  HeartHandshake,
+  Lightbulb,
+  Users,
+  MapPin,
+  Phone,
+  Mail,
+} from "lucide-react";
 
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -8,8 +18,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { cn } from "@/lib/utils";
 
-import aboutHeroImg from "@/assets/services/design-engineering.png";
-import workshopImg from "@/assets/services/hydrostatic-testing.png";
+//import aboutHeroImg from "@/assets/CFH-Team-Picture2.png";
+import aboutHeroImg from "@/assets/CFH-Team-Picture.png";
+import workshopImg from "@/assets/CFH-Building.png";
 
 type Localized<T> = { en: T; fr: T };
 
@@ -89,6 +100,17 @@ export default function AboutPage() {
     ? "Une équipe québécoise dédiée à la prévention incendie—de la conception à l’entretien, avec une obsession pour la conformité et la qualité."
     : "A Quebec-based team focused on end-to-end fire prevention—design through maintenance—with an obsession for compliance and quality.";
 
+  // Location
+  const addressLines = ["1455 Bd Pitfield", "Saint-Laurent, QC", "H4S 1G3"];
+  const phoneDisplay = "(514) 333-3389";
+  const phoneTel = "5143333389";
+  const email = "cfhsecurite@cfhsecurite.com";
+  const destination = encodeURIComponent("1455 Bd Pitfield, Saint-Laurent, QC H4S 1G3");
+  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${destination}`;
+  const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(
+    "1455 Bd Pitfield Saint-Laurent QC H4S 1G3"
+  )}&output=embed`;
+
   return (
     <div className="min-h-screen bg-[hsl(222_47%_6%)] text-foreground">
       {/* Global glow */}
@@ -98,7 +120,7 @@ export default function AboutPage() {
       </div>
 
       <main>
-        {/* HERO (match ServicesPage hero pattern) */}
+        {/* HERO */}
         <section className="relative min-h-[70vh] overflow-hidden">
           <div className="absolute inset-0">
             <img src={aboutHeroImg} alt="About" className="w-full h-full object-cover" />
@@ -121,62 +143,22 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* STORY */}
+        {/* WHY CHOOSE (single card), then WHO WE ARE under it */}
         <section className="py-16 md:py-24">
           <div className="container mx-auto px-4 lg:px-8">
-            <div className="mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-8">
-              <div className="lg:col-span-7">
-                <div
-                  className={cn(
-                    "relative rounded-[2.25rem] overflow-hidden border border-white/10",
-                    "bg-white/5 backdrop-blur-xl",
-                    "shadow-[0_30px_90px_rgba(0,0,0,0.35)]"
-                  )}
-                >
-                  <div className="pointer-events-none absolute inset-0 opacity-15 bg-[radial-gradient(90%_70%_at_15%_15%,hsl(var(--cfh-blue))_0%,transparent_60%),radial-gradient(80%_65%_at_85%_25%,hsl(var(--cfh-red))_0%,transparent_62%)]" />
-                  <div className="relative z-10 p-8 md:p-10">
-                    <h2 className="font-display font-bold tracking-tight text-3xl md:text-4xl">
-                      {isFr ? "Qui nous sommes" : "Who We Are"}
-                    </h2>
-                    <p className="mt-5 text-muted-foreground leading-relaxed">
-                      {isFr
-                        ? "CFH Sécurité inc. accompagne les organisations à travers le Québec avec une approche complète : vente, inspection, réparation, entretien et installation d’équipements de prévention et de lutte contre l’incendie."
-                        : "CFH Sécurité supports organizations across Quebec with an end-to-end approach: sales, inspection, repair, maintenance and installation of fire-prevention and fire-fighting equipment."}
-                    </p>
-                    <p className="mt-4 text-muted-foreground leading-relaxed">
-                      {isFr
-                        ? "Nous proposons des solutions intégrées de détection, d’alarme et d’extinction—des agents propres et respectueux de l’environnement aux systèmes d’alarme intelligents, adaptés à votre application."
-                        : "We deliver integrated detection, alarm and suppression solutions—from clean, environmentally responsible agents to advanced intelligent alarm systems—tailored to your application."}
-                    </p>
-
-                    <div className="mt-8 flex flex-wrap gap-3">
-                      {(isFr ? ["Conformité", "Ingénierie", "Entretien"] : ["Compliance", "Engineering", "Maintenance"]).map(
-                        (tag) => (
-                          <span
-                            key={tag}
-                            className="inline-flex items-center gap-2 rounded-full bg-black/25 border border-white/10 px-4 py-2 text-sm text-foreground/85"
-                          >
-                            <BadgeCheck className="h-4 w-4 text-[hsl(var(--cfh-red))]" />
-                            {tag}
-                          </span>
-                        )
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="lg:col-span-5">
-                <div
-                  className={cn(
-                    "relative rounded-[2.25rem] overflow-hidden border border-white/10",
-                    "bg-white/5 backdrop-blur-xl",
-                    "shadow-[0_30px_90px_rgba(0,0,0,0.35)]",
-                    "h-full"
-                  )}
-                >
-                  <div className="relative h-56 md:h-72">
-                    <img src={workshopImg} alt="Workshop" className="absolute inset-0 w-full h-full object-cover" />
+            <div className="mx-auto max-w-6xl space-y-8">
+              {/* Why Choose CFH */}
+              <Card
+                className={cn(
+                  "relative rounded-[2.25rem] overflow-hidden border border-white/10",
+                  "bg-white/5 backdrop-blur-xl",
+                  "shadow-[0_30px_90px_rgba(0,0,0,0.35)]"
+                )}
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-[46%_1fr]">
+                  {/* image */}
+                  <div className="relative min-h-[260px] md:min-h-[340px] lg:min-h-full">
+                    <img src={workshopImg} alt="Workshop" className="absolute inset-0 h-full w-full object-cover" />
                     <div
                       className="absolute inset-0"
                       style={{
@@ -186,17 +168,18 @@ export default function AboutPage() {
                     />
                   </div>
 
-                  <div className="p-8 md:p-10">
-                    <h3 className="font-display font-semibold text-2xl">
+                  {/* content */}
+                  <CardContent className="p-8 md:p-10 lg:p-12">
+                    <h2 className="font-display font-bold tracking-tight text-3xl md:text-4xl">
                       {isFr ? "Pourquoi nous choisir" : "Why Choose CFH"}
-                    </h3>
-                    <p className="mt-4 text-muted-foreground leading-relaxed">
+                    </h2>
+                    <p className="mt-5 text-muted-foreground leading-relaxed">
                       {isFr
                         ? "Un atelier équipé à la fine pointe, des services sur mesure et une culture centrée sur la satisfaction client."
                         : "A modern workshop, tailored services, and a client-first mindset—focused on measurable safety outcomes."}
                     </p>
 
-                    <ul className="mt-6 space-y-3">
+                    <ul className="mt-7 space-y-3">
                       {(isFr ? capabilityBullets.fr : capabilityBullets.en).map((b) => (
                         <li key={b} className="grid grid-cols-[14px_1fr] gap-x-3 items-start">
                           <span className="mt-2 h-2 w-2 rounded-full bg-[hsl(var(--cfh-red))]" />
@@ -204,9 +187,70 @@ export default function AboutPage() {
                         </li>
                       ))}
                     </ul>
-                  </div>
+
+                    <div className="mt-8 flex flex-col sm:flex-row gap-3">
+                      <Button
+                        asChild
+                        className={cn(
+                          "group bg-transparent text-[hsl(var(--cfh-red))] border border-[hsl(var(--cfh-red))]",
+                          "font-semibold px-8 py-6 transition-colors",
+                          "hover:bg-[hsl(var(--cfh-red))] hover:text-primary-foreground hover:border-transparent"
+                        )}
+                      >
+                        <Link to="/#contact" className="inline-flex items-center gap-2">
+                          {isFr ? "Obtenir une soumission" : "Get a Quote"}
+                          <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                        </Link>
+                      </Button>
+
+                      <Button asChild variant="secondary" className="btn-cfh px-8 py-6">
+                        <Link to="/services">{isFr ? "Voir les services" : "Browse Services"}</Link>
+                      </Button>
+                    </div>
+                  </CardContent>
                 </div>
-              </div>
+              </Card>
+
+              {/* Who We Are (now below) */}
+              <Card
+                className={cn(
+                  "relative rounded-[2.25rem] overflow-hidden border border-white/10",
+                  "bg-white/5 backdrop-blur-xl",
+                  "shadow-[0_30px_90px_rgba(0,0,0,0.35)]"
+                )}
+              >
+                <div className="pointer-events-none absolute inset-0 opacity-15 bg-[radial-gradient(90%_70%_at_15%_15%,hsl(var(--cfh-blue))_0%,transparent_60%),radial-gradient(80%_65%_at_85%_25%,hsl(var(--cfh-red))_0%,transparent_62%)]" />
+                <CardContent className="relative z-10 p-8 md:p-10 lg:p-12">
+                  <h2 className="font-display font-bold tracking-tight text-3xl md:text-4xl">
+                    {isFr ? "Qui nous sommes" : "Who We Are"}
+                  </h2>
+
+                  <p className="mt-5 text-muted-foreground leading-relaxed">
+                    {isFr
+                      ? "CFH Sécurité inc. accompagne les organisations à travers le Québec avec une approche complète : vente, inspection, réparation, entretien et installation d’équipements de prévention et de lutte contre l’incendie."
+                      : "CFH Sécurité supports organizations across Quebec with an end-to-end approach: sales, inspection, repair, maintenance and installation of fire-prevention and fire-fighting equipment."}
+                  </p>
+                  <p className="mt-4 text-muted-foreground leading-relaxed">
+                    {isFr
+                      ? "Nous proposons des solutions intégrées de détection, d’alarme et d’extinction—des agents propres et respectueux de l’environnement aux systèmes d’alarme intelligents, adaptés à votre application."
+                      : "We deliver integrated detection, alarm and suppression solutions—from clean, environmentally responsible agents to advanced intelligent alarm systems—tailored to your application."}
+                  </p>
+
+                  <div className="mt-8 flex flex-wrap gap-3">
+                    {(isFr ? ["Conformité", "Ingénierie", "Entretien"] : ["Compliance", "Engineering", "Maintenance"]).map(
+                      (tag) => (
+                        <span
+                          key={tag}
+                          className="inline-flex items-center gap-2 rounded-full bg-black/25 border border-white/10 px-4 py-2 text-sm text-foreground/85"
+                        >
+                          <BadgeCheck className="h-4 w-4 text-[hsl(var(--cfh-red))]" />
+                          {tag}
+                        </span>
+                      )
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>
@@ -251,6 +295,116 @@ export default function AboutPage() {
                     </Card>
                   );
                 })}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* LOCATION */}
+        <section className="pb-16 md:pb-24">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="mx-auto max-w-6xl">
+              <div className="text-center">
+                <h2 className="font-display font-bold tracking-tight text-3xl md:text-4xl">
+                  {isFr ? "Nous trouver" : "Find Us"}
+                </h2>
+                <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
+                  {isFr
+                    ? "Visitez notre atelier à Saint-Laurent ou obtenez l’itinéraire en un clic."
+                    : "Visit our Saint-Laurent location or get directions in one click."}
+                </p>
+              </div>
+
+              <div className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-6">
+                {/* Info card */}
+                <Card
+                  className={cn(
+                    "lg:col-span-5 rounded-[2.25rem] border border-white/10 bg-white/5 backdrop-blur-xl",
+                    "shadow-[0_30px_90px_rgba(0,0,0,0.30)]"
+                  )}
+                >
+                  <CardContent className="p-8 md:p-10">
+                    <div className="flex items-start gap-4">
+                      <div className="mt-1 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-black/25 border border-white/10">
+                        <MapPin className="h-6 w-6 text-[hsl(var(--cfh-red))]" />
+                      </div>
+
+                      <div className="flex-1">
+                        <h3 className="font-display text-2xl font-semibold tracking-tight">{isFr ? "Adresse" : "Address"}</h3>
+                        <p className="mt-3 text-muted-foreground leading-relaxed">
+                          {addressLines.map((l) => (
+                            <span key={l} className="block">
+                              {l}
+                            </span>
+                          ))}
+                        </p>
+
+                        <div className="mt-6 space-y-3">
+                          <a
+                            href={`tel:${phoneTel}`}
+                            className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
+                          >
+                            <Phone className="h-5 w-5 text-[hsl(var(--cfh-blue))]" />
+                            <span>{phoneDisplay}</span>
+                          </a>
+
+                          <a
+                            href={`mailto:${email}`}
+                            className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
+                          >
+                            <Mail className="h-5 w-5 text-[hsl(var(--cfh-blue))]" />
+                            <span>{email}</span>
+                          </a>
+                        </div>
+
+                        <div className="mt-8 flex flex-col sm:flex-row gap-3">
+                          <Button
+                            asChild
+                            className={cn(
+                              "group w-full sm:w-auto bg-transparent text-[hsl(var(--cfh-blue))] border border-[hsl(var(--cfh-blue))]",
+                              "font-semibold px-8 py-6 transition-colors",
+                              "hover:bg-[hsl(var(--cfh-blue))] hover:text-white hover:border-transparent"
+                            )}
+                          >
+                            <a href={directionsUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2">
+                              {isFr ? "Itinéraire" : "Directions"}
+                              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                            </a>
+                          </Button>
+
+                          <Button asChild variant="secondary" className="btn-cfh w-full sm:w-auto px-8 py-6">
+                            <Link to="/#contact">{isFr ? "Nous contacter" : "Contact Us"}</Link>
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Map card */}
+                <div
+                  className={cn(
+                    "lg:col-span-7 rounded-[2.25rem] overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xl",
+                    "shadow-[0_30px_90px_rgba(0,0,0,0.30)]"
+                  )}
+                >
+                  <div className="relative h-[360px] md:h-[440px]">
+                    <iframe
+                      title="CFH Sécurité location"
+                      src={mapEmbedUrl}
+                      className="absolute inset-0 h-full w-full"
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                    />
+                    <div
+                      className="pointer-events-none absolute inset-0"
+                      style={{
+                        background:
+                          "linear-gradient(180deg, hsl(222 47% 6% / 0.10) 0%, hsl(222 47% 6% / 0.35) 100%)",
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

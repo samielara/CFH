@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { cn } from "@/lib/utils";
 
-import contactHeroImg from "@/assets/services/fire-extinguisher-maintenance.png";
+import contactHeroImg from "@/assets/CFH-AboutUS.png";
 
 type Localized<T> = { en: T; fr: T };
 
