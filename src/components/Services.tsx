@@ -4,95 +4,13 @@ import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
-import designEngineeringImg from "@/assets/services/design-engineering.png";
-import kitchenSuppressionImg from "@/assets/services/kitchen-suppression.png";
-import inspectionMaintenanceImg from "@/assets/services/inspection-maintenance.png";
-import specialHazardsImg from "@/assets/services/special-hazards.png";
-import evacuationPlansImg from "@/assets/services/evacuation-plans.png";
-
-
-type Slide = {
-  id: string;
-  title: { en: string; fr: string };
-  description: { en: string; fr: string };
-  highlights: { en: string[]; fr: string[] };
-  image: string;
-};
+import { serviceCatalog } from "@/data/servicesCatalog";
 
 const Services = () => {
   const { t, language } = useLanguage();
   const isFr = language === "fr";
 
-  const slides = useMemo<Slide[]>(
-    () => [
-      {
-        id: "design-engineering",
-        title: { en: "Design & Engineering", fr: "Conception & ingénierie" },
-        description: {
-          en: "Engineer-certified plans for modern fire protection systems.",
-          fr: "Plans certifiés par ingénieur pour systèmes modernes de protection incendie.",
-        },
-        highlights: {
-          en: ["Clean agent systems", "CO₂ systems", "Sprinkler systems"],
-          fr: ["Agents propres", "Systèmes CO₂", "Systèmes de gicleurs"],
-        },
-        image: designEngineeringImg,
-      },
-      {
-        id: "kitchen-suppression",
-        title: { en: "Kitchen Fire Suppression", fr: "Extinction cuisine" },
-        description: {
-          en: "Commercial kitchen protection designed for fast response.",
-          fr: "Protection cuisine commerciale conçue pour une réponse rapide.",
-        },
-        highlights: {
-          en: ["Restaurant kitchens", "Compliance readiness", "System upgrades"],
-          fr: ["Cuisines de restaurants", "Conformité", "Mises à niveau"],
-        },
-        image: kitchenSuppressionImg,
-      },
-      {
-        id: "inspection-maintenance",
-        title: { en: "Inspection & Maintenance", fr: "Inspection & entretien" },
-        description: {
-          en: "Keep systems code-compliant and always ready.",
-          fr: "Maintenez vos systèmes conformes et prêts en tout temps.",
-        },
-        highlights: {
-          en: ["Fire alarms", "Emergency lighting", "Fire hydrants"],
-          fr: ["Alarmes incendie", "Éclairage d’urgence", "Bornes-fontaines"],
-        },
-        image: inspectionMaintenanceImg,
-      },
-      {
-        id: "special-hazards",
-        title: { en: "Special Hazard Systems", fr: "Risques spéciaux" },
-        description: {
-          en: "High-performance suppression for critical environments.",
-          fr: "Extinction haute performance pour environnements critiques.",
-        },
-        highlights: {
-          en: ["NOVEC 1230", "FM-200", "FireTrace / Sapphire"],
-          fr: ["NOVEC 1230", "FM-200", "FireTrace / Sapphire"],
-        },
-        image: specialHazardsImg,
-      },
-      {
-        id: "evacuation-plans",
-        title: { en: "Evacuation Plans", fr: "Plans d’évacuation" },
-        description: {
-          en: "Clear, customized emergency evacuation planning.",
-          fr: "Plans d’évacuation d’urgence clairs et personnalisés.",
-        },
-        highlights: {
-          en: ["Routes & signage", "Procedures", "Team readiness"],
-          fr: ["Itinéraires & signalisation", "Procédures", "Préparation"],
-        },
-        image: evacuationPlansImg,
-      },
-    ],
-    []
-  );
+  const slides = useMemo(() => serviceCatalog, []);
 
   const [index, setIndex] = useState(0);
   const slide = slides[index];
@@ -101,8 +19,11 @@ const Services = () => {
   const next = () => setIndex((i) => (i + 1) % slides.length);
 
   const title = isFr ? slide.title.fr : slide.title.en;
-  const description = isFr ? slide.description.fr : slide.description.en;
-  const highlights = isFr ? slide.highlights.fr : slide.highlights.en;
+  const description = isFr ? slide.subtitle.fr : slide.subtitle.en;
+
+  // Use first 3 bullets as highlights in the slider
+  const highlightsAll = isFr ? slide.items.fr : slide.items.en;
+  const highlights = highlightsAll.slice(0, 3);
 
   return (
     <section id="services" className="py-24 lg:py-32 relative overflow-hidden">
@@ -119,41 +40,39 @@ const Services = () => {
         </div>
 
         <div className="relative max-w-6xl xl:max-w-7xl mx-auto">
-          {/* Left arrow */}
           <button
             type="button"
             onClick={prev}
             aria-label="Previous service"
             className={cn(
               "absolute -left-3 md:-left-16 top-1/2 -translate-y-1/2 z-20",
-              "h-11 w-11 rounded-full",
+                  "h-16 w-16 rounded-full", // was h-11 w-11
               "bg-background/15 backdrop-blur-md border border-border/40",
               "text-foreground/80 hover:text-foreground",
               "hover:border-[hsl(var(--cfh-red))]/40 hover:bg-background/25",
               "transition-all duration-200"
             )}
           >
-            <ChevronLeft className="h-5 w-5 mx-auto" />
+            <ChevronLeft className="h-8 w-8 mx-auto" /> {/* was h-5 w-5 */}
           </button>
 
-          {/* Right arrow */}
           <button
             type="button"
             onClick={next}
             aria-label="Next service"
             className={cn(
               "absolute -right-3 md:-right-16 top-1/2 -translate-y-1/2 z-20",
-              "h-11 w-11 rounded-full",
+                  "h-16 w-16 rounded-full", // was h-11 w-11
+
               "bg-background/15 backdrop-blur-md border border-border/40",
               "text-foreground/80 hover:text-foreground",
               "hover:border-[hsl(var(--cfh-red))]/40 hover:bg-background/25",
               "transition-all duration-200"
             )}
           >
-            <ChevronRight className="h-5 w-5 mx-auto" />
+            <ChevronRight className="h-8 w-8 mx-auto" /> {/* was h-5 w-5 */}
           </button>
 
-          {/* Glow wrapper */}
           <div className="relative overflow-visible rounded-3xl">
             <div
               className={cn(
@@ -162,14 +81,9 @@ const Services = () => {
               )}
             />
 
-            {/* Card */}
             <div className="relative overflow-hidden rounded-3xl border border-border/40 shadow-lg min-h-[440px] md:min-h-[500px] bg-background/5 backdrop-blur-sm">
               <div className="absolute inset-0">
-                <img
-                  src={slide.image}
-                  alt={title}
-                  className="w-full h-full object-cover"
-                />
+                <img src={slide.image} alt={title} className="w-full h-full object-cover" />
                 <div
                   className="absolute inset-0"
                   style={{
@@ -179,35 +93,24 @@ const Services = () => {
                 />
               </div>
 
-              {/* Content: TOP then BOTTOM */}
               <div className="relative z-10 h-full px-6 py-10 md:px-12 md:py-12">
                 <div className="mx-auto w-full max-w-3xl text-center flex flex-col min-h-[340px] md:min-h-[400px]">
-                  {/* TOP */}
                   <div>
-                    <h3 className="text-3xl md:text-5xl font-semibold text-foreground mb-4">
-                      {title}
-                    </h3>
-
-                    <p className="text-muted-foreground leading-relaxed md:text-lg">
-                      {description}
-                    </p>
+                    <h3 className="text-3xl md:text-5xl font-semibold text-foreground mb-4">{title}</h3>
+                    <p className="text-muted-foreground leading-relaxed md:text-lg">{description}</p>
                   </div>
 
-                  {/* HIGHLIGHTS (ABOVE button) */}
                   <div className="mt-10 mx-auto w-fit">
                     <ul className="flex flex-col gap-3 items-start">
                       {highlights.map((h, i) => (
                         <li key={i} className="grid grid-cols-[12px_auto] items-center gap-x-3">
                           <span className="h-2 w-2 rounded-full bg-[hsl(var(--cfh-red))]" />
-                          <span className="text-sm md:text-[15px] text-foreground/85 whitespace-nowrap">
-                            {h}
-                          </span>
+                          <span className="text-sm md:text-[15px] text-foreground/85 whitespace-nowrap">{h}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  {/* BUTTON (centered in remaining space) */}
                   <div className="flex-1 flex items-center justify-center">
                     <Button
                       asChild
@@ -221,14 +124,13 @@ const Services = () => {
                         hover:border-transparent
                       "
                     >
-                  <Link to={`/services#${slide.id}`} className="inline-flex items-center gap-2">
-                      {isFr ? "En savoir plus" : "Learn More"}
-                      <ArrowUpRight className="h-4 w-4" />
-                    </Link>
-                  </Button>
+                      <Link to={`/services#${slide.id}`} className="inline-flex items-center gap-2">
+                        {isFr ? "En savoir plus" : "Learn More"}
+                        <ArrowUpRight className="h-4 w-4" />
+                      </Link>
+                    </Button>
                   </div>
 
-                  {/* DOTS (bottom) */}
                   <div className="mt-6 flex items-center justify-center">
                     <div className="flex items-center justify-center gap-2">
                       {slides.map((_, i) => (
@@ -239,18 +141,14 @@ const Services = () => {
                           aria-label={`Go to service ${i + 1}`}
                           className={cn(
                             "h-2.5 rounded-full transition-all duration-200",
-                            i === index
-                              ? "w-10 bg-[hsl(var(--cfh-red))]"
-                              : "w-2.5 bg-foreground/20 hover:bg-foreground/35"
+                            i === index ? "w-10 bg-[hsl(var(--cfh-red))]" : "w-2.5 bg-foreground/20 hover:bg-foreground/35"
                           )}
                         />
                       ))}
                     </div>
                   </div>
                 </div>
-
               </div>
-              {/* /Content */}
             </div>
           </div>
           {/* /Glow wrapper */}

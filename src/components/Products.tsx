@@ -159,14 +159,14 @@ const Products = () => {
             aria-label="Previous product"
             className={cn(
               "absolute -left-3 md:-left-16 top-1/2 -translate-y-1/2 z-20",
-              "h-11 w-11 rounded-full",
+              "h-16 w-16 rounded-full",
               "bg-background/15 backdrop-blur-md border border-border/40",
               "text-foreground/80 hover:text-foreground",
               "hover:border-[hsl(var(--cfh-red))]/40 hover:bg-background/25",
               "transition-all duration-200"
             )}
           >
-            <ChevronLeft className="h-5 w-5 mx-auto" />
+            <ChevronLeft className="h-8 w-8 mx-auto" />
           </button>
 
           {/* Right arrow */}
@@ -176,14 +176,14 @@ const Products = () => {
             aria-label="Next product"
             className={cn(
               "absolute -right-3 md:-right-16 top-1/2 -translate-y-1/2 z-20",
-              "h-11 w-11 rounded-full",
+              "h-16 w-16 rounded-full",
               "bg-background/15 backdrop-blur-md border border-border/40",
               "text-foreground/80 hover:text-foreground",
               "hover:border-[hsl(var(--cfh-red))]/40 hover:bg-background/25",
               "transition-all duration-200"
             )}
           >
-            <ChevronRight className="h-5 w-5 mx-auto" />
+            <ChevronRight className="h-8 w-8 mx-auto" />
           </button>
 
           {/* Glow wrapper */}

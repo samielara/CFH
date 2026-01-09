@@ -9,35 +9,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { cn } from "@/lib/utils";
-
+import { serviceCatalog, type ServiceGroup } from "@/data/servicesCatalog";
 import servicesLandingBg from "@/assets/services/CFH-Service-LandingPage.png";
-
-// images
-import designEngineeringImg from "@/assets/services/design-engineering.png";
-import inspectionMaintenanceImg from "@/assets/services/inspection-maintenance.png";
-import evacuationPlansImg from "@/assets/services/evacuation-plans.png";
-
-import airTightnessImg from "@/assets/services/air-tightness-test.png";
-import fireExtinguisherMaintenanceImg from "@/assets/services/fire-extinguisher-maintenance.png";
-import novec1230Img from "@/assets/services/novec-1230.png";
-import hydrostaticTestingImg from "@/assets/services/hydrostatic-testing.png";
-import fireHosesImg from "@/assets/services/fire-hoses.png";
-import respiratorsImg from "@/assets/services/respirators.png";
-import cylinderStrippingPaintingImg from "@/assets/services/cylinder-stripping-painting.png";
-
-type Localized<T> = { en: T; fr: T };
-
-type ServiceGroup = "engineering" | "testing" | "maintenance" | "equipment";
-
-type ServiceCard = {
-  id: string;
-  group: ServiceGroup;
-  title: Localized<string>;
-  subtitle: Localized<string>;
-  image: string;
-  items: Localized<string[]>;
-  quoteCategory?: string;
-};
 
 export default function ServicesPage() {
   const { language } = useLanguage();
@@ -54,219 +27,9 @@ export default function ServicesPage() {
     "data-[state=active]:bg-[hsl(var(--cfh-blue))] data-[state=active]:text-white data-[state=active]:border-transparent"
   );
 
-  const services = useMemo<ServiceCard[]>(
-    () => [
-      {
-        id: "design-engineering",
-        group: "engineering",
-        title: { en: "Design & Engineering", fr: "Conception & ingénierie" },
-        subtitle: {
-          en: "Engineer-certified plans and system design for all types of fire protection environments.",
-          fr: "Plans certifiés par ingénieur et conception pour tous types d’environnements de protection incendie.",
-        },
-        image: designEngineeringImg,
-        quoteCategory: "Plan et ingénérie",
-        items: {
-          en: [
-            "Engineer-certified plans for all types of fire protection systems",
-            "Kitchen fire suppression design: multi-zone restaurants with multiple systems",
-            "Clean agent suppression: IT rooms, archives, telecommunications equipment",
-            "Carbon dioxide (CO₂) systems for manufacturing environments",
-            "Chemical powder systems: paint booths, automotive, chemical product storage",
-            "Small industrial machine suppression: CNC lathes, server cabinets, electrical substations, dust collectors…",
-            "Automatic sprinkler systems",
-            "System modifications",
-            "Tightness test (integrity testing)",
-          ],
-          fr: [
-            "Plan certifié par ingénieur pour tous types de systèmes incendie",
-            "Système d’extinction pour cuisine : restaurant à pièces avec multiples systèmes",
-            "Système d’extinction à agent propre : salles informatiques, salles d’archives, équipement de télécommunications",
-            "Système à dioxyde de carbone (CO₂) : entreprise manufacturière",
-            "Systèmes à poudre chimique : cabine de peinture, automobile, entreposage de produits chimiques",
-            "Systèmes d’extinction pour petites machines industrielles : tour CNC, cabine de serveur, poste électrique, dépoussiéreur…",
-            "Systèmes de gicleurs",
-            "Modifications de systèmes",
-            "Test d’étanchéité",
-          ],
-        },
-      },
-      {
-        id: "air-tightness-test",
-        group: "testing",
-        title: { en: "Air Tightness Test", fr: "Test d’étanchéité à l’air" },
-        subtitle: {
-          en: "Room integrity testing for spaces protected by clean agent and special hazard systems.",
-          fr: "Test d’intégrité des locaux protégés par des systèmes à agent propre et risques spéciaux.",
-        },
-        image: airTightnessImg,
-        items: {
-          en: ["Air tightness testing for rooms protected by suppression systems (NOVEC 1230, CO₂, etc.)"],
-          fr: [
-            "CFH Sécurité assure le test d’étanchéité à l’air pour les salles à protéger par un système d’extinction (NOVEC 1230, CO₂, etc.)",
-          ],
-        },
-      },
-      {
-        id: "evacuation-plans",
-        group: "engineering",
-        title: { en: "Evacuation Plans", fr: "Plans d’évacuation" },
-        subtitle: {
-          en: "Custom fire emergency evacuation plans designed for your building and workflows.",
-          fr: "Plans d’évacuation d’urgence en cas d’incendie sur mesure, adaptés à votre bâtiment.",
-        },
-        image: evacuationPlansImg,
-        quoteCategory: "Plan d'évacuation",
-        items: {
-          en: ["Custom fire emergency evacuation plans."],
-          fr: ["Plans d’évacuation d’urgence en cas d’incendie sur mesure."],
-        },
-      },
-      {
-        id: "inspection-maintenance",
-        group: "maintenance",
-        title: { en: "Inspection & Maintenance", fr: "Inspection & entretien" },
-        subtitle: {
-          en: "Regular inspection and maintenance to keep your fire protection equipment compliant with local codes.",
-          fr: "Inspection et maintenance régulières pour assurer la conformité de vos équipements selon les codes locaux.",
-        },
-        image: inspectionMaintenanceImg,
-        quoteCategory: "Inspection",
-        items: {
-          en: [
-            "Kitchen fire suppression systems",
-            "Fire extinguishers",
-            "Fire alarm systems",
-            "Emergency lighting",
-            "Automatic sprinkler systems",
-            "DAr inspection (backflow prevention device)",
-            "Fire hydrants",
-            "Special hazard systems (Sapphire): CO₂, Novec, FM-200",
-            "Special hazard systems (FireTrace): CO₂, Novec, FM-200, chemical powder",
-            "Chemical powder systems: paint booths, automotive, chemical product storage…",
-            "Vehicle and marine systems",
-            "Custom workshop services: verification, repair, maintenance and installation of fire protection equipment",
-          ],
-          fr: [
-            "Systèmes d’extinction incendie pour cuisines",
-            "Extincteurs",
-            "Systèmes d’alarme incendie",
-            "Éclairage d’urgence",
-            "Systèmes de gicleurs automatique",
-            "Inspection DAr (dispositif anti-refoulement)",
-            "Bornes fontaines",
-            "Systèmes pour risques spéciaux (Sapphire) : CO₂, Novec, FM-200",
-            "Systèmes pour risques spéciaux (FireTrace) : CO₂, Novec, FM-200, poudre chimique",
-            "Systèmes à poudre chimique : cabine de peinture, automobile, entreposage de produits chimiques…",
-            "Systèmes pour véhicules, marin",
-            "Notre atelier fournit des services sur mesure : vérification, réparation, entretien et installation d’équipements de protection incendie",
-          ],
-        },
-      },
-      {
-        id: "fire-extinguisher-maintenance",
-        group: "maintenance",
-        title: { en: "Fire Extinguisher Maintenance", fr: "Entretien d’extincteurs" },
-        subtitle: {
-          en: "Inspection, repair, refilling and maintenance of portable, mobile or fixed powder extinguishers (NFPA 10).",
-          fr: "Inspection, réparation, remplissage et entretien des extincteurs à poudre portatifs, mobiles ou fixes (NFPA 10).",
-        },
-        image: fireExtinguisherMaintenanceImg,
-        quoteCategory: "Extincteur portatif",
-        items: {
-          en: ["Inspection, repair, refilling and maintenance of all types of powder extinguishers in compliance with NFPA 10."],
-          fr: ["Inspection, réparation, remplissage et entretien de tous types d’extincteurs à poudre en conformité avec la norme NFPA 10."],
-        },
-      },
-      {
-        id: "novec-1230",
-        group: "maintenance",
-        title: { en: "Novec 1230", fr: "Novec 1230" },
-        subtitle: {
-          en: "Hydrostatic testing, refilling and maintenance for Novec 1230 systems.",
-          fr: "Essai hydrostatique, remplissage et entretien des systèmes Novec 1230.",
-        },
-        image: novec1230Img,
-        quoteCategory: "Système d'extinction automatique",
-        items: {
-          en: ["Hydrostatic testing, refilling and maintenance of Novec 1230 systems."],
-          fr: ["Test hydrostatique, remplissage et entretien du système Novec 1230."],
-        },
-      },
-      {
-        id: "hydrostatic-testing",
-        group: "testing",
-        title: { en: "Hydrostatic Testing", fr: "Essais hydrostatiques" },
-        subtitle: {
-          en: "Computer-controlled hydrostatic testing for high-pressure cylinders up to 10,000 PSI.",
-          fr: "Essais hydrostatiques sur bonbonnes haute pression jusqu’à 10 000 PSI avec équipement contrôlé par ordinateur.",
-        },
-        image: hydrostaticTestingImg,
-        items: {
-          en: [
-            "Hydrostatic testing on high-pressure cylinders up to 10,000 PSI with computer-controlled equipment.",
-            "Approved: Transport Canada",
-          ],
-          fr: [
-            "Essais hydrostatiques sur des bonbonnes à haute pression jusqu’à 10 000 PSI avec équipement contrôlé par ordinateur.",
-            "Approuvé : Transport Canada",
-          ],
-        },
-      },
-      {
-        id: "fire-hoses",
-        group: "testing",
-        title: { en: "Fire Hoses", fr: "Boyaux d’incendie" },
-        subtitle: {
-          en: "Fire hose testing performed in accordance with NFPA 1962.",
-          fr: "Essais de boyaux effectués conformément à la norme NFPA 1962.",
-        },
-        image: fireHosesImg,
-        quoteCategory: "Boyau d'incendie",
-        items: {
-          en: ["Fire hose testing in accordance with NFPA 1962."],
-          fr: ["Essais sur les boyaux conformément à la norme NFPA 1962."],
-        },
-      },
-      {
-        id: "respirators",
-        group: "equipment",
-        title: { en: "Respirator Cylinders", fr: "Bonbonnes respirateurs" },
-        subtitle: {
-          en: "Breathing air cylinder filling up to 4,500 PSI for firefighters, divers and more.",
-          fr: "Remplissage de bonbonnes à air respirable jusqu’à 4 500 PSI (pompiers, plongeurs, etc.).",
-        },
-        image: respiratorsImg,
-        items: {
-          en: [
-            "Breathing air cylinder filling up to 4,500 PSI (firefighters, divers, etc.).",
-            "Equipment tested and certified by Canadian MAXXAM laboratory every six months.",
-          ],
-          fr: [
-            "Remplissage des bonbonnes à air respirable (pompiers, plongeurs, etc.) jusqu’à 4 500 PSI.",
-            "Équipement testé et certifié par le laboratoire canadien MAXXAM tous les six mois.",
-          ],
-        },
-      },
-      {
-        id: "cylinder-stripping-painting",
-        group: "equipment",
-        title: { en: "Cylinder Stripping & Painting", fr: "Décapage et peinture de cylindres" },
-        subtitle: {
-          en: "Stripping and painting with high-quality workmanship while meeting Environment Canada requirements.",
-          fr: "Décapage et peinture avec une qualité remarquable tout en respectant les exigences d’Environnement Canada.",
-        },
-        image: cylinderStrippingPaintingImg,
-        items: {
-          en: ["Cylinder stripping and painting with high-quality workmanship and Environment Canada compliance."],
-          fr: [
-            "Décapage et peinture des cylindres avec une qualité de service remarquable, en respectant les exigences d’Environnement Canada.",
-          ],
-        },
-      },
-    ],
-    []
-  );
+
+const services = useMemo(() => serviceCatalog, []);
+
 
   const filtered = useMemo(() => {
     if (activeTab === "all") return services;
@@ -362,15 +125,15 @@ export default function ServicesPage() {
                         : "/quote";
 
                       return (
-                        <Card
-                          key={s.id}
-                          className={cn(
-                            "overflow-hidden rounded-[2.25rem] border border-white/10",
-                            "bg-white/5 backdrop-blur-xl",
-                            "shadow-[0_30px_90px_rgba(0,0,0,0.30)]",
-                            "hover-lift"
-                          )}
-                        >
+                        <div key={s.id} id={s.id} className="scroll-mt-28">
+                          <Card
+                            className={cn(
+                              "overflow-hidden rounded-[2.25rem] border border-white/10",
+                              "bg-white/5 backdrop-blur-xl",
+                              "shadow-[0_30px_90px_rgba(0,0,0,0.30)]",
+                              "hover-lift"
+                            )}
+                          >
                           <div className="grid grid-cols-1 lg:grid-cols-[42%_1fr]">
                             {/* IMAGE */}
                             <div className="relative min-h-[260px] md:min-h-[320px] lg:min-h-full">
@@ -418,7 +181,6 @@ export default function ServicesPage() {
                                   >
                                     <Link to={quoteUrl} className="inline-flex items-center justify-center gap-2">
                                       {isFr ? "Obtenir une soumission" : "Get a Quote"}
-                                      <ArrowRight className="h-4 w-4" />
                                     </Link>
                                   </Button>
                                 </div>
@@ -426,6 +188,7 @@ export default function ServicesPage() {
                             </CardContent>
                           </div>
                         </Card>
+                        </div>
                       );
                     })}
                   </div>

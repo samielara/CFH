@@ -199,7 +199,6 @@ export default function AboutPage() {
                       >
                         <Link to="/#contact" className="inline-flex items-center gap-2">
                           {isFr ? "Obtenir une soumission" : "Get a Quote"}
-                          <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                         </Link>
                       </Button>
 
@@ -434,7 +433,6 @@ export default function AboutPage() {
                   >
                     <Link to="/#contact" className="inline-flex items-center gap-2">
                       {isFr ? "Obtenir une soumission" : "Get a Quote"}
-                      <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                     </Link>
                   </Button>
 

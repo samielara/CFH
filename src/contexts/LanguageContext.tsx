@@ -83,7 +83,7 @@ const translations: Record<Language, Translations> = {
     },
     services: {
       title: 'Our Services',
-      subtitle: 'Comprehensive security solutions tailored to your needs',
+      subtitle: "Comprehensive fire protection services tailored to your building.",
       security: {
         title: 'Security Guards',
         description: 'Elite trained professionals providing 24/7 protection for commercial, industrial, and residential properties.',
@@ -145,7 +145,7 @@ const translations: Record<Language, Translations> = {
     },
     services: {
       title: 'Nos Services',
-      subtitle: 'Solutions de sécurité complètes adaptées à vos besoins',
+      subtitle: "Solutions complètes de protection incendie adaptées à votre bâtiment.",
       security: {
         title: 'Agents de Sécurité',
         description: 'Professionnels d\'élite assurant une protection 24/7 pour les propriétés commerciales, industrielles et résidentielles.',
