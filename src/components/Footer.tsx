@@ -1,5 +1,6 @@
-import { Shield, Phone, Mail, MapPin, Facebook, Linkedin, Instagram } from "lucide-react";
+import { Phone, Mail, MapPin, Facebook, Linkedin, Instagram } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import cfhLogo from "@/assets/CFH-Securite-Logo.png";
 
 const Footer = () => {
   const { t } = useLanguage();
@@ -19,16 +20,12 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-10">
           {/* Brand Column */}
           <div>
-            <a href="#home" className="flex items-center gap-3 mb-6">
-              <Shield className="h-10 w-10 text-primary" />
-              <div className="flex flex-col">
-                <span className="text-xl font-bold text-foreground tracking-tight">
-                  CFH <span className="text-primary">Sécurité</span>
-                </span>
-                <span className="text-[10px] uppercase tracking-widest text-muted-foreground">
-                  Prévention Incendie
-                </span>
-              </div>
+            <a href="#home" className="inline-block mb-6">
+               <img
+                  src={cfhLogo}
+                  alt="CFH Sécurité"
+                  className="h-16 md:h-20 w-auto drop-shadow-sm"
+               />
             </a>
 
             <p className="text-muted-foreground text-sm leading-relaxed mb-6">
@@ -36,16 +33,32 @@ const Footer = () => {
             </p>
 
             <div className="flex items-center gap-4">
-              {[Facebook, Linkedin, Instagram].map((Icon, index) => (
-                <a
-                  key={index}
-                  href="#"
-                  className="p-2 rounded-lg bg-secondary/50 border border-border/30 text-muted-foreground hover:text-primary hover:border-primary/30 transition-all duration-300"
-                  aria-label="Social link"
-                >
-                  <Icon className="h-5 w-5" />
-                </a>
-              ))}
+              {/* Facebook */}
+              <a
+                href="#"
+                className="p-2 rounded-lg bg-[#1877F2] text-white border border-transparent hover:opacity-90 transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 shadow-lg shadow-blue-900/20"
+                aria-label="Facebook"
+              >
+                <Facebook className="h-5 w-5 fill-current" />
+              </a>
+
+              {/* LinkedIn */}
+              <a
+                href="#"
+                className="p-2 rounded-lg bg-[#0A66C2] text-white border border-transparent hover:opacity-90 transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 shadow-lg shadow-blue-900/20"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="h-5 w-5 fill-current" />
+              </a>
+
+              {/* Instagram */}
+              <a
+                href="#"
+                className="p-2 rounded-lg bg-gradient-to-br from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white border border-transparent hover:opacity-90 transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 shadow-lg shadow-orange-900/20"
+                aria-label="Instagram"
+              >
+                <Instagram className="h-5 w-5" />
+              </a>
             </div>
           </div>
 

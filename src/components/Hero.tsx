@@ -39,7 +39,7 @@ const Hero = () => {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(180deg, hsl(222 47% 6% / 0.85) 0%, hsl(222 47% 6% / 0.7) 50%, hsl(222 47% 6% / 0.95) 100%)",
+              "linear-gradient(180deg, hsl(222 47% 6% / 0.65) 0%, hsl(222 47% 6% / 0.45) 50%, hsl(222 47% 6% / 0.8) 100%)",
           }}
         />
       </div>
@@ -58,7 +58,7 @@ const Hero = () => {
         <div className="max-w-4xl mx-auto text-center">
           {/* Main Heading */}
           <h1
-            className="text-foreground font-display font-bold tracking-tight leading-[1.05] text-[clamp(2.5rem,5vw,5rem)]"
+            className="text-foreground font-display font-bold tracking-tight leading-[1.05] text-[clamp(2.5rem,5vw,5rem)] drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
             style={{ animationDelay: "0.1s" }}
           >
             {t.hero.title.split(" ").map((word, i) => (
@@ -69,7 +69,7 @@ const Hero = () => {
                   word === "Security" ||
                   word === "Incendie" ||
                   word === "Sécurité"
-                    ? "text-gradient"
+                    ? "text-gradient drop-shadow-none filter brightness-110" // Remove drop shadow from gradient text to keep it clean, or keep it? Gradient usually needs shadow less or specific one. Let's try regular shadow for all.
                     : ""
                 }
               >
@@ -80,7 +80,7 @@ const Hero = () => {
 
           {/* Subtitle */}
           <p
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-up"
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-up drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]"
             style={{ animationDelay: "0.2s" }}
           >
             {t.hero.subtitle}
@@ -122,10 +122,10 @@ const Hero = () => {
               { value: "100%", label: t.stats.coverage },
             ].map((stat, statIndex) => (
               <div key={statIndex} className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-gradient mb-1">
+                <div className="text-2xl md:text-3xl font-bold text-gradient mb-1 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
                   {stat.value}
                 </div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
+                <div className="text-sm text-muted-foreground drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{stat.label}</div>
               </div>
             ))}
           </div>

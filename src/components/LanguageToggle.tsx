@@ -14,7 +14,7 @@ export default function LanguageToggle() {
       size="sm"
       onClick={() => setLanguage(next)}
       className={cn(
-        "h-9 rounded-full px-4 text-sm font-semibold",
+        "h-7 lg:h-11 rounded-full px-3 lg:px-4 text-xs lg:text-base font-semibold",
         "transition-all duration-200",
         "bg-background/10 backdrop-blur-md",
         "text-[hsl(var(--cfh-red))]",

@@ -9,6 +9,7 @@ import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "@/components/ScrollToTop";
 import RestoreBodyScroll from "@/components/RestoreBodyScroll";
+import AiAssistant from "@/components/AiAssistant";
 import QuotePage from "./pages/QuotePage";
 
 const Layout = () => (
@@ -16,24 +17,29 @@ const Layout = () => (
     <ScrollToTop />
     <RestoreBodyScroll />
     <Header />
+    <AiAssistant />
     <Outlet />
   </div>
 );
 
+import { AiChatProvider } from "@/contexts/AiChatContext";
+
 const App = () => (
-  <Routes>
-    <Route element={<Layout />}>
-      <Route path="/" element={<Index />} />
-      <Route path="/services" element={<ServicesPage />} />
-      <Route path="/products" element={<ProductsPage />} />
-      <Route path="/projects" element={<ProjectsPage />} />
-      <Route path="/about" element={<AboutPage />} />
-      <Route path="/contact" element={<ContactPage />} />
-      <Route path="/quote" element={<QuotePage />} />
-      <Route path="/demande-de-soumission" element={<QuotePage />} />
-      <Route path="*" element={<NotFound />} />
-    </Route>
-  </Routes>
+  <AiChatProvider>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Index />} />
+        <Route path="/services" element={<ServicesPage />} />
+        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/projects" element={<ProjectsPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/quote" element={<QuotePage />} />
+        <Route path="/demande-de-soumission" element={<QuotePage />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
+  </AiChatProvider>
 );
 
 export default App;

@@ -81,58 +81,46 @@ const Services = () => {
               )}
             />
 
-            <div className="relative overflow-hidden rounded-3xl border border-border/40 shadow-lg min-h-[440px] md:min-h-[500px] bg-background/5 backdrop-blur-sm">
-              <div className="absolute inset-0">
-                <img src={slide.image} alt={title} className="w-full h-full object-cover" />
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background:
-                      "linear-gradient(180deg, hsl(222 47% 6% / 0.78) 0%, hsl(222 47% 6% / 0.72) 55%, hsl(222 47% 6% / 0.82) 100%)",
-                  }}
-                />
-              </div>
+            <div className="relative overflow-hidden rounded-3xl border border-border/40 shadow-2xl bg-background flex flex-col lg:flex-row min-h-[500px]">
+              
+              {/* Text Section - Left/Bottom */}
+              <div className="w-full lg:w-[40%] flex flex-col justify-center p-8 lg:p-12 bg-card relative order-2 lg:order-1">
+                 <div className="flex flex-col items-start text-left space-y-6">
+                    <div>
+                      <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-3 leading-tight">{title}</h3>
+                      <p className="text-muted-foreground leading-relaxed text-sm md:text-base">{description}</p>
+                    </div>
 
-              <div className="relative z-10 h-full px-6 py-10 md:px-12 md:py-12">
-                <div className="mx-auto w-full max-w-3xl text-center flex flex-col min-h-[340px] md:min-h-[400px]">
-                  <div>
-                    <h3 className="text-3xl md:text-5xl font-semibold text-foreground mb-4">{title}</h3>
-                    <p className="text-muted-foreground leading-relaxed md:text-lg">{description}</p>
-                  </div>
-
-                  <div className="mt-10 mx-auto w-fit">
-                    <ul className="flex flex-col gap-3 items-start">
+                    <ul className="flex flex-col gap-3 w-full">
                       {highlights.map((h, i) => (
-                        <li key={i} className="grid grid-cols-[12px_auto] items-center gap-x-3">
-                          <span className="h-2 w-2 rounded-full bg-[hsl(var(--cfh-red))]" />
-                          <span className="text-sm md:text-[15px] text-foreground/85 whitespace-nowrap">{h}</span>
+                        <li key={i} className="flex items-center gap-3">
+                          <span className="h-2 w-2 rounded-full bg-[hsl(var(--cfh-red))] shrink-0" />
+                          <span className="text-sm md:text-base text-foreground/80 font-medium">{h}</span>
                         </li>
                       ))}
                     </ul>
-                  </div>
 
-                  <div className="flex-1 flex items-center justify-center">
-                    <Button
-                      asChild
-                      className="
-                        bg-transparent text-[hsl(var(--cfh-red))]
-                        border border-[hsl(var(--cfh-red))]
-                        font-semibold px-8
-                        transition-colors
-                        hover:bg-[hsl(var(--cfh-red))]
-                        hover:text-primary-foreground
-                        hover:border-transparent
-                      "
-                    >
-                      <Link to={`/services#${slide.id}`} className="inline-flex items-center gap-2">
-                        {isFr ? "En savoir plus" : "Learn More"}
-                        <ArrowUpRight className="h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </div>
+                    <div className="pt-4">
+                      <Button
+                        asChild
+                        size="lg"
+                        className="
+                          bg-[hsl(var(--cfh-red))] text-white
+                          font-semibold px-8 h-12
+                          hover:bg-[hsl(var(--cfh-red))]/90
+                          shadow-lg shadow-[hsl(var(--cfh-red))]/20
+                          group
+                        "
+                      >
+                        <Link to={`/services#${slide.id}`} className="inline-flex items-center gap-2">
+                          {isFr ? "En savoir plus" : "Learn More"}
+                          <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                        </Link>
+                      </Button>
+                    </div>
 
-                  <div className="mt-6 flex items-center justify-center">
-                    <div className="flex items-center justify-center gap-2">
+                    {/* Navigation Dots within Text Panel */}
+                    <div className="flex gap-2 mt-4">
                       {slides.map((_, i) => (
                         <button
                           key={i}
@@ -140,15 +128,24 @@ const Services = () => {
                           onClick={() => setIndex(i)}
                           aria-label={`Go to service ${i + 1}`}
                           className={cn(
-                            "h-2.5 rounded-full transition-all duration-200",
-                            i === index ? "w-10 bg-[hsl(var(--cfh-red))]" : "w-2.5 bg-foreground/20 hover:bg-foreground/35"
+                            "h-2 rounded-full transition-all duration-300",
+                            i === index ? "w-8 bg-[hsl(var(--cfh-red))]" : "w-2 bg-muted-foreground/30 hover:bg-foreground/30"
                           )}
                         />
                       ))}
                     </div>
-                  </div>
-                </div>
+                 </div>
               </div>
+
+              {/* Image Section - Right/Top */}
+              <div className="relative w-full lg:w-[60%] h-64 lg:h-auto order-1 lg:order-2 overflow-hidden bg-muted">
+                <img 
+                  src={slide.image} 
+                  alt={title} 
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105" 
+                />
+              </div>
+
             </div>
           </div>
           {/* /Glow wrapper */}
