@@ -120,7 +120,7 @@ const navItems: NavItem[] = useMemo(
                   <Menu className="h-6 w-6" />
                 </button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-[85%] sm:max-w-[320px] p-0 border-r-border/30 bg-background/95 backdrop-blur-xl">
+              <SheetContent side="left" className="w-[60%] sm:max-w-[320px] p-0 border-r-border/30 bg-background/95 backdrop-blur-xl [&>button]:hidden">
                  <SheetHeader className="h-24 flex items-center justify-center px-6 border-b border-border/10">
                    <SheetTitle className="sr-only">Menu</SheetTitle>
                    <div className="flex items-center gap-3">

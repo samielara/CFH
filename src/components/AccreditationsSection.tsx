@@ -187,7 +187,7 @@ const renderLogoGrid = (items: LogoItem[], variant: "bodies" | "manufacturers") 
         <div className="max-w-6xl xl:max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">{title}</h2>
+            <h2 className="text-foreground font-display font-bold tracking-tight leading-[1.05] text-[clamp(2.5rem,5vw,5rem)] drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] mb-4">{title}</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">{subtitle}</p>
           </div>
 

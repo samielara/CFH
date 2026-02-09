@@ -144,7 +144,7 @@ const Products = () => {
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
+          <h2 className="text-foreground font-display font-bold tracking-tight leading-[1.05] text-[clamp(2.5rem,5vw,5rem)] drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] mb-4">
             {sectionTitle}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
@@ -159,15 +159,15 @@ const Products = () => {
             onClick={prev}
             aria-label="Previous product"
             className={cn(
-              "absolute -left-3 md:-left-16 top-1/2 -translate-y-1/2 z-20",
-              "h-16 w-16 rounded-full",
+              "absolute -left-2 md:-left-16 top-1/2 -translate-y-1/2 z-20",
+              "h-10 w-10 md:h-16 md:w-16 rounded-full",
               "bg-background/15 backdrop-blur-md border border-border/40",
               "text-foreground/80 hover:text-foreground",
               "hover:border-[hsl(var(--cfh-red))]/40 hover:bg-background/25",
               "transition-all duration-200"
             )}
           >
-            <ChevronLeft className="h-8 w-8 mx-auto" />
+            <ChevronLeft className="h-6 w-6 md:h-8 md:w-8 mx-auto" />
           </button>
 
           {/* Right arrow */}
@@ -176,15 +176,15 @@ const Products = () => {
             onClick={next}
             aria-label="Next product"
             className={cn(
-              "absolute -right-3 md:-right-16 top-1/2 -translate-y-1/2 z-20",
-              "h-16 w-16 rounded-full",
+              "absolute -right-2 md:-right-16 top-1/2 -translate-y-1/2 z-20",
+              "h-10 w-10 md:h-16 md:w-16 rounded-full",
               "bg-background/15 backdrop-blur-md border border-border/40",
               "text-foreground/80 hover:text-foreground",
               "hover:border-[hsl(var(--cfh-red))]/40 hover:bg-background/25",
               "transition-all duration-200"
             )}
           >
-            <ChevronRight className="h-8 w-8 mx-auto" />
+            <ChevronRight className="h-6 w-6 md:h-8 md:w-8 mx-auto" />
           </button>
 
           {/* Glow wrapper */}
@@ -204,7 +204,7 @@ const Products = () => {
                 <img 
                   src={slide.image} 
                   alt={title} 
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105" 
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105 scale-110" 
                 />
                 {/* Dark overlay slightly on image to blend */}
                 <div className="absolute inset-0 bg-black/10" />
