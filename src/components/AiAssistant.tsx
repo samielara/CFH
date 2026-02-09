@@ -14,44 +14,75 @@ type KnowledgeEntry = {
 };
 
 // Knowledge Base Data extracted from legacy site
+// Knowledge Base Data extracted from legacy site & reviews
 const KNOWLEDGE_BASE: Record<string, KnowledgeEntry> = {
   greetings: {
     keywords: ["hello", "hi", "hey", "greetings", "start", "bonjour", "salut", "allo"],
     response: {
-      en: "Hello! I'm the CFH Safety Assistant. I can help you with <b>Fire Alarms</b>, <b>Extinguishers</b>, <b>Kitchen Systems</b>, and <b>Inspections</b>.<br><br>How can I assist you today?",
-      fr: "Bonjour! Je suis l'assistant CFH Sécurité. Je peux vous aider avec les <b>Alarmes Incendie</b>, <b>Extincteurs</b>, <b>Systèmes de Cuisine</b> et <b>Inspections</b>.<br><br>Comment puis-je vous aider aujourd'hui?"
+      en: "Hello! I'm the CFH Safety Assistant. I can help you with <b>Fire Alarms</b>, <b>Extinguishers</b>, <b>Emergency Services</b>, and <b>Inspections</b>.<br><br>How can I assist you today?",
+      fr: "Bonjour! Je suis l'assistant CFH Sécurité. Je peux vous aider avec les <b>Alarmes Incendie</b>, <b>Extincteurs</b>, <b>Services d'Urgence</b> et <b>Inspections</b>.<br><br>Comment puis-je vous aider aujourd'hui?"
     },
   },
+  emergency: {
+    keywords: ["emergency", "24/7", "urgent", "night", "help now", "urgence", "24h", "nuit", "vite"],
+    response: {
+      en: "<b>🚨 24/7 Emergency Service:</b><br>We offer 24-hour emergency service for all your fire safety systems.<br>Call us immediately at <a href='tel:5143333389' class='text-[hsl(var(--cfh-red))] font-bold'>(514) 333-3389</a>.",
+      fr: "<b>🚨 Service d'Urgence 24/7:</b><br>Nous offrons un service d'urgence 24h pour tous vos systèmes de sécurité incendie.<br>Appelez-nous immédiatement au <a href='tel:5143333389' class='text-[hsl(var(--cfh-red))] font-bold'>(514) 333-3389</a>."
+    }
+  },
+  locations: {
+    keywords: ["location", "address", "where", "map", "office", "valleyfield", "st-laurent", "adresse", "ou", "carte", "bureau"],
+    response: {
+      en: "<b>Our Locations:</b><br>📍 <b>Head Office:</b> 1455 Boul. Pitfield, Saint-Laurent, QC H4S 1G3<br>📍 <b>Branch:</b> 647 rue Roger, Valleyfield, QC J6S 0A7<br>We serve the greater Montreal area and beyond.",
+      fr: "<b>Nos Adresses:</b><br>📍 <b>Siège Social:</b> 1455 Boul. Pitfield, Saint-Laurent, QC H4S 1G3<br>📍 <b>Succursale:</b> 647 rue Roger, Valleyfield, QC J6S 0A7<br>Nous desservons le Grand Montréal et les environs."
+    }
+  },
   services: {
-    keywords: ["services", "offer", "help", "work", "serv", "offre", "aider", "travail"],
+    keywords: ["services", "offer", "help", "work", "serv", "plan", "test", "inspection", "maintenance", "offre", "aider", "travail"],
     response: {
       en: `<b>Our Services:</b><br>
-      • <b>Design & Engineering:</b> Certified plans for all fire systems.<br>
-      • <b>Inspection & Maintenance:</b> Regular maintenance for Alarms, Extinguishers, Sprinklers.<br>
-      • <b>Custom Workshop:</b> Hydrostatic testing, cylinder painting, and refilling.<br>
-      <a href='/services' class='text-[hsl(var(--cfh-red))] font-bold hover:underline'>View Services</a>`,
+      • <b>Design & Engineering:</b> Certified plans & custom evacuation maps.<br>
+      • <b>Inspection & Maintenance:</b> Alarms, Extinguishers, Sprinklers, Emergency Lights.<br>
+      • <b>Specialized Testing:</b> Air tightness testing & Hydrostatic testing.<br>
+      • <b>Installation:</b> New systems for any building type.<br>
+      <a href='/services' class='text-[hsl(var(--cfh-red))] font-bold hover:underline'>View All Services</a>`,
       fr: `<b>Nos Services:</b><br>
-      • <b>Design et Ingénierie:</b> Plans certifiés pour tous systèmes incendie.<br>
-      • <b>Inspection de Maintenance:</b> Entretien régulier pour Alarmes, Extincteurs, Gicleurs.<br>
-      • <b>Atelier sur mesure:</b> Tests hydrostatiques, peinture de cylindres et remplissage.<br>
-      <a href='/services' class='text-[hsl(var(--cfh-red))] font-bold hover:underline'>Voir les Services</a>`
+      • <b>Design et Ingénierie:</b> Plans certifiés et plans d'évacuation sur mesure.<br>
+      • <b>Inspection & Maintenance:</b> Alarmes, Extincteurs, Gicleurs, Éclairage d'urgence.<br>
+      • <b>Tests Spécialisés:</b> Tests d'étanchéité et tests hydrostatiques.<br>
+      • <b>Installation:</b> Nouveaux systèmes pour tout type de bâtiment.<br>
+      <a href='/services' class='text-[hsl(var(--cfh-red))] font-bold hover:underline'>Voir tous les Services</a>`
     }
   },
   products: {
-    keywords: ["products", "buy", "extinguisher", "alarm", "ansul", "buckeye", "strike", "produits", "acheter", "extincteur", "alarme"],
+    keywords: ["products", "buy", "extinguisher", "alarm", "ansul", "buckeye", "strike", "novec", "fm-200", "foam", "produits", "acheter", "extincteur", "alarme", "mousse"],
     response: {
       en: `<b>Our Products:</b><br>
       We carry top brands like <b>Ansul</b>, <b>Buckeye</b>, and <b>Strike First</b>.<br>
-      • <b>Portable Extinguishers</b> (ABC, CO2, Water)<br>
-      • <b>Kitchen Suppression Systems</b><br>
-      • <b>Fire Alarms & Detectors</b><br>
+      • <b>Extinguishers:</b> ABC, CO2, Water, Chemical.<br>
+      • <b>Suppression Systems:</b> FM-200, Novec 1230, CO2, Foam.<br>
+      • <b>Kitchen Systems:</b> Range Guard, Ansul R-102.<br>
       <a href='/products' class='text-[hsl(var(--cfh-red))] font-bold hover:underline'>View Catalog</a>`,
       fr: `<b>Nos Produits:</b><br>
-      Nous distribuons des marques reconnues comme <b>Ansul</b>, <b>Buckeye</b> et <b>Strike First</b>.<br>
-      • <b>Extincteurs Portatifs</b> (ABC, CO2, Eau)<br>
-      • <b>Systèmes d'extinction pour cuisine</b><br>
-      • <b>Alarmes Incendie et Détecteurs</b><br>
+      Nous distribuons des marques comme <b>Ansul</b>, <b>Buckeye</b> et <b>Strike First</b>.<br>
+      • <b>Extincteurs:</b> ABC, CO2, Eau, Chimique.<br>
+      • <b>Systèmes d'Extinction:</b> FM-200, Novec 1230, CO2, Mousse.<br>
+      • <b>Cuisines:</b> Range Guard, Ansul R-102.<br>
       <a href='/products' class='text-[hsl(var(--cfh-red))] font-bold hover:underline'>Voir le Catalogue</a>`
+    }
+  },
+  clients: {
+    keywords: ["clients", "who", "sector", "hotel", "hospital", "school", "residential", "customer", "secteur", "ecole", "hopital", "residentiel"],
+    response: {
+      en: "<b>Who We Serve:</b><br>We work with Hotels, Restaurants, Hospitals, Schools, Government Institutions, Office Towers, and Residential Buildings. <br>Trusted by 500+ clients.",
+      fr: "<b>Nos Clients:</b><br>Nous servons les Hôtels, Restaurants, Hôpitaux, Écoles, Institutions Gouvernementales, Tours de Bureaux et Édifices Résidentiels. <br>Confiance de plus de 500 clients."
+    }
+  },
+  reviews: {
+    keywords: ["review", "rating", "reputation", "good", "bad", "opinion", "avis", "classement", "reputation", "bon", "mauvais"],
+    response: {
+      en: "<b>Our Reputation:</b><br>CFH Security is known for its productive and positive work culture (Rated 3.0/5 on Indeed). We are a trusted partner in Montreal since 1995, committed to customer satisfaction and safety.",
+      fr: "<b>Notre Réputation:</b><br>CFH Sécurité est reconnue pour sa culture de travail positive (Noté 3.0/5 sur Indeed). Partenaire de confiance à Montréal depuis 1995, nous sommes dévoués à la satisfaction et à la sécurité de nos clients."
     }
   },
   kitchen: {
@@ -64,22 +95,22 @@ const KNOWLEDGE_BASE: Record<string, KnowledgeEntry> = {
   contact: {
     keywords: ["contact", "email", "phone", "call", "quote", "price", "cost", "speak", "appeler", "telephone", "prix", "cout", "parler", "soumission"],
     response: {
-      en: "You can reach us at <a href='tel:5143333389' class='text-[hsl(var(--cfh-red))] font-bold'>(514) 333-3389</a> or <a href='/quote' class='text-[hsl(var(--cfh-red))] font-bold'>Request a Quote</a> online.<br>Address: 1455 Boul. Pitfield, Ville St-Laurent.",
-      fr: "Vous pouvez nous joindre au <a href='tel:5143333389' class='text-[hsl(var(--cfh-red))] font-bold'>(514) 333-3389</a> ou <a href='/demande-de-soumission' class='text-[hsl(var(--cfh-red))] font-bold'>Demander une Soumission</a>.<br>Adresse: 1455 Boul. Pitfield, Ville St-Laurent."
+      en: "You can reach us at <a href='tel:5143333389' class='text-[hsl(var(--cfh-red))] font-bold'>(514) 333-3389</a> or email <b>cfhsecurite@cfhsecurite.com</b>.<br><a href='/quote' class='text-[hsl(var(--cfh-red))] font-bold'>Request a Quote Online</a>.",
+      fr: "Joignez-nous au <a href='tel:5143333389' class='text-[hsl(var(--cfh-red))] font-bold'>(514) 333-3389</a> ou par courriel à <b>cfhsecurite@cfhsecurite.com</b>.<br><a href='/demande-de-soumission' class='text-[hsl(var(--cfh-red))] font-bold'>Demander une Soumission</a>."
     },
   },
   about: {
-    keywords: ["about", "history", "who", "company", "propos", "histoire", "qui", "compagnie", "entreprise"],
+    keywords: ["about", "history", "who", "company", "years", "since", "propos", "histoire", "qui", "compagnie", "entreprise", "annee", "depuis"],
     response: {
-      en: "<b>About CFH:</b><br>Proudly at your service for 115 years! We are specialists in sales, verification, and maintenance of fire prevention equipment. We possess all relevant accreditations for major manufacturers.",
-      fr: "<b>À Propos de CFH:</b><br>Fièrement à votre service depuis 115 ans! Nous sommes spécialistes de la vente, vérification et entretien d'équipements de prévention incendie. Nous possédons les accréditations pour tous les manufacturiers majeurs."
+      en: "<b>About CFH:</b><br>Proudly at your service for 115 years! Incorporated in 1995, we are leaders in fire prevention. We possess all relevant accreditations for major manufacturers and offer 24/7 service.",
+      fr: "<b>À Propos de CFH:</b><br>Fièrement à votre service depuis 115 ans! Incorporée en 1995, nous sommes leaders en prévention incendie. Nous possédons les accréditations majeures et offrons un service 24/7."
     }
   },
   default: {
     keywords: [],
     response: {
-      en: "I'm here to ensure your safety! I can provide info on <b>Alarms</b>, <b>Extinguishers</b>, <b>Services</b>, or help you <b>Get a Quote</b>.<br><br>How can I assist you?",
-      fr: "Je suis là pour votre sécurité! Je peux vous informer sur les <b>Alarmes</b>, <b>Extincteurs</b>, <b>Services</b>, ou vous aider avec une <b>Soumission</b>.<br><br>Comment puis-je vous aider?"
+      en: "I'm here to ensure your safety! I can provide info on <b>Alarms</b>, <b>Extinguishers</b>, <b>Emergency Services</b>, or help you <b>Get a Quote</b>.<br><br>How can I assist you?",
+      fr: "Je suis là pour votre sécurité! Je peux vous informer sur les <b>Alarmes</b>, <b>Extincteurs</b>, <b>Services d'Urgence</b>, ou vous aider avec une <b>Soumission</b>.<br><br>Comment puis-je vous aider?"
     }
   },
 };
