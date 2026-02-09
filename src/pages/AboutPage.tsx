@@ -128,8 +128,12 @@ export default function AboutPage() {
               className="absolute inset-0"
               style={{
                 background:
-                  "linear-gradient(180deg, hsl(222 47% 6% / 0.70) 0%, hsl(222 47% 6% / 0.78) 45%, hsl(222 47% 6% / 0.92) 100%)",
+                  "linear-gradient(180deg, hsl(222 47% 6% / 0.45) 0%, hsl(222 47% 6% / 0.25) 50%, hsl(222 47% 6%) 100%)",
               }}
+            />
+            {/* Extended Fade to Bottom */}
+            <div 
+              className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[hsl(222_47%_6%)] to-transparent z-10"
             />
           </div>
 

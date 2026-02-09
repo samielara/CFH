@@ -39,8 +39,12 @@ const Hero = () => {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(180deg, hsl(222 47% 6% / 0.65) 0%, hsl(222 47% 6% / 0.45) 50%, hsl(222 47% 6% / 0.8) 100%)",
+              "linear-gradient(180deg, hsl(222 47% 6% / 0.65) 0%, hsl(222 47% 6% / 0.45) 50%, hsl(222 47% 6%) 100%)",
           }}
+        />
+        {/* Extended Fade to Bottom */}
+        <div 
+          className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-10"
         />
       </div>
 
