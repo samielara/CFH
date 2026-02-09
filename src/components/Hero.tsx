@@ -12,6 +12,12 @@ const Hero = () => {
 
   const videos = useMemo(() => [heroVideo2, heroVideo, heroVideo3 ], []);
   const [index, setIndex] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // Reset loading state when video changes? 
+  // User mainly cared about initial load, but smooth transition between videos is also good.
+  // However, forcing opacity 0 between videos might cause a black flash.
+  // Let's stick to initial load fade-in for now as per user request.
 
   const handleEnded = () => {
     setIndex((prev) => (prev + 1) % videos.length);
@@ -20,19 +26,22 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-end justify-center overflow-hidden"
+      className="relative min-h-screen flex items-end justify-center overflow-hidden bg-background" // Added bg-background to prevent white flash
     >
       {/* Background Video with Overlay */}
       <div className="absolute inset-0">
         <video
           key={videos[index]} // reload when switching videos
-          className="w-full h-full object-cover"
+          className={`w-full h-full object-cover scale-105 transition-opacity duration-1000 ${
+            isLoaded ? "opacity-100" : "opacity-0"
+          }`}
           src={videos[index]}
           autoPlay
           muted
           playsInline
           preload="auto"
           onEnded={handleEnded}
+          onLoadedData={() => setIsLoaded(true)}
         />
 
         <div
